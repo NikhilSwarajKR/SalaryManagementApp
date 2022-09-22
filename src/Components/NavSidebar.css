@@ -1,0 +1,21 @@
+.sidebar{
+    width: 200px;
+    height: 100vh;
+    position: fixed;
+}
+.options{
+    padding-top: 100px;
+}
+
+.side-item{
+    width: 200px;
+    padding: 10px;
+    border: 40px;
+    background-color: transparent;
+    color:black;
+    margin-bottom: 5px;
+}
+
+.side-item:hover{
+    background-color: brown;
+}

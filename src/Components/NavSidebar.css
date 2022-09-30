@@ -1,10 +1,10 @@
 .sidebar{
     width: 200px;
-    height: 100vh;
     position: fixed;
 }
 .options{
     padding-top: 100px;
+    height: 100vh;
 }
 
 .side-item{
@@ -12,10 +12,8 @@
     padding: 10px;
     border: 40px;
     background-color: transparent;
-    color:black;
+    color:blue;
+    font-size: 20px;
     margin-bottom: 5px;
-}
-
-.side-item:hover{
-    background-color: brown;
+    text-decoration: none;
 }

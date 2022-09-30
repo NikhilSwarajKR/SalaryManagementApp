@@ -1,26 +1,14 @@
-import React,{useState, useEffect} from 'react'
-import db from '../firebase';
-import {collection, query, getDocs} from 'firebase/firestore';
+import React,{ Component } from 'react';
+import { BrowserRouter as Router, Routes, Route ,Link} from "react-router-dom";
+import Teaching from './Teaching';
+import Non_Teaching from './Non_Teaching';
 import './NavSidebar.css';
-import ReactDOM  from 'react-dom';
-export default function 
-() { 
-  ReactDOM.render('<table><th><tr>Name</tr><tr>Years Of Experience</tr><tr>Department-ID</tr></th>');
-  const [Teachers,setTeachers]=useState([]);
-  const fetchTeachers=async()=>{
-  const data= await getDocs(collection(db, "employees"));
-  data.forEach(item=>{
-    console.log(item.id);
-    console.log(item.data().name);
-    console.log(item.data().YOE);
-    console.log(item.data().DOJ);
-    console.log(item.data().department.id);
-    ReactDOM.render('<tr><td>{item.data().name}</td><td>{item.data().YOE}</td><td>{item.data().department.id}</td></tr>');
-  })
-  };
-  return (
-    <div>
-        <nav className="navbar navbar-expand-lg bg-light">
+
+export default class NavSidebar extends Component{
+  render() {
+    return (
+        <div>
+        <nav className="navbar bg-light" >
             <div className="container-fluid">
                 <h6 className="navbar-brand text-primary" href="#">Salary Management App</h6>
             </div>
@@ -30,23 +18,21 @@ export default function
                     <li><a className="dropdown-item" href="#">Acount Settings</a></li>
                     <li><a className="dropdown-item" href="#">Logout</a></li>
                 </ul>
-         </div>
+            </div>
         </nav>
-        <div className="sidebar bg-light">
-          <div className="options">
-              <button className="side-item text-primary">Teaching Staffs</button>
-              <button className="side-item text-primary">Non-Teaching Staffs</button>
-              <button className="side-item text-primary"> Generate Report</button>
-          </div>
-
-              
-
-        </div>
-
-
-        
-    </div>
-  )
+        <Router>
+            <div className="sidebar">
+            <div className="options bg-light">
+                <p className="side-item text-primary"><Link to="/n1">Teaching</Link></p>
+                <p className="side-item text-primary"><Link to="/n2">Non Teaching</Link></p>
+            </div>
+            </div>
+            <Routes>
+                <Route exact path='/n1' element={<Teaching/>}></Route>
+                <Route exact path='/n2' element={<Non_Teaching/>}></Route>
+            </Routes>
+        </Router>   
+    </div>   
+    )
+  }
 }
-
-

@@ -1,3 +1,4 @@
+
 .sidebar{
     width: 200px;
     position: fixed;
@@ -11,9 +12,16 @@
     width: 200px;
     padding: 10px;
     border: 40px;
-    background-color: transparent;
-    color:blue;
+    background-color:teal;
     font-size: 20px;
     margin-bottom: 5px;
     text-decoration: none;
 }
+.side-item a{
+    color:white;
+}
+.dropdown{
+    margin-right: 50px;
+}
+
+

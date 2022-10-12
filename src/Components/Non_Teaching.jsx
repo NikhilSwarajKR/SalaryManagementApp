@@ -3,7 +3,8 @@ import db from './../firebase';
 import {collection, query, onSnapshot,where} from 'firebase/firestore';
 import ReactDOM  from 'react-dom';
 import DataTable,{CustomLoader} from 'react-data-table-component';
-import './Common.css'
+import './Styles/Common.css';
+import {Route, Link, useNavigate} from 'react-router-dom';
 
 export default function Non_Teaching() {
   function filterDeptById(jsonObject, id) {
@@ -117,6 +118,11 @@ function filterDesigById(jsonObject, id) {
       name: 'Department',
       selector: row => row.department,
       sortable: true,
+    },
+    {
+      cell: row => <button><Link to={`/GenerateSalarySlip/${row.id}`}>Generate Salary Slip</Link></button>,
+      allowOverflow: true,
+      button: true,
     }];
 
   return (

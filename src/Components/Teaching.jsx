@@ -4,8 +4,9 @@ import {collection, query, onSnapshot,where} from 'firebase/firestore';
 import ReactDOM  from 'react-dom';
 import DataTable from 'react-data-table-component';
 import { json } from 'react-router-dom';
-import './Common.css'
-
+import './Styles/Common.css'
+import SalarySlipGeneration from './SalarySlipGeneration';
+import {Route, Link, useNavigate} from 'react-router-dom';
 export default function Teaching() {
   function filterDeptById(jsonObject, id) {
       for (const obj of jsonObject) {
@@ -121,12 +122,16 @@ function filterDesigById(jsonObject, id) {
       name: 'Department',
       selector: row => row.department,
       sortable: true,
+    },
+    {
+      cell: row => <button><Link to={`/GenerateSalarySlip/${row.id}`}>Generate Salary Slip</Link></button>,
+      allowOverflow: true,
+      button: true,
     }];
 
   return (
     <div className='Teaching rendering'>
-       <DataTable columns={cols} data={eData} title="Teaching Staffs" pagination responsive fixedHeader fixedHeaderScrollHeight="300px"/>
+       <DataTable columns={cols} data={eData} title="Teaching Staffs" pagination responsive fixedHeader fixedHeaderScrollHeight="700px"/>
     </div>
-     
   );
 }

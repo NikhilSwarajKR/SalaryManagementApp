@@ -131,7 +131,7 @@ function filterDesigById(jsonObject, id) {
 
   return (
     <div className='Teaching rendering'>
-       <DataTable columns={cols} data={eData} title="Teaching Staffs" pagination responsive fixedHeader fixedHeaderScrollHeight="700px"/>
+       <DataTable columns={cols} data={eData} title="Teaching Staffs" pagination responsive fixedHeader/>
     </div>
   );
 }

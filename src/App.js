@@ -1,14 +1,24 @@
-import Auth from "./components/auth";
-import Dashboard from "./components/dashboard";
-import { useUserContext } from "./context/userContext";
+import "./App.css";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import Login from "./Login";
+import Register from "./Register";
+import Reset from "./Reset";
+import Dashboard from "./Dashboard";
+import Profile from "./profile";
 
 function App() {
-  const { user, loading, error } = useUserContext();
-
   return (
-    <div className="App">
-      {error && <p className="error">{error}</p>}
-      {loading ? <h2>Loading...</h2> : <> {user ? <Dashboard /> : <Auth />} </>}
+    <div className="app">
+      <Router>
+        <Routes>
+          <Route exact path="/" element={<Login />} />
+          <Route exact path="/register" element={<Register />} />
+          <Route exact path="/reset" element={<Reset />} />
+          <Route exact path="/dashboard" element={<Dashboard />} />
+  
+        </Routes>
+      </Router>
+      <div><Profile/></div>
     </div>
   );
 }

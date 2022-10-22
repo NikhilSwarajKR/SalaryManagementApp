@@ -1,12 +1,12 @@
-import React,{useState, useEffect, Component} from 'react'
-import db from './../firebase';
+import React,{useState, useEffect} from 'react'
+import {db,storage} from './../firebase';
 import {collection, query, onSnapshot,where} from 'firebase/firestore';
-import ReactDOM  from 'react-dom';
-import DataTable,{CustomLoader} from 'react-data-table-component';
+import DataTable from 'react-data-table-component';
 import './Styles/Common.css';
-import {Route, Link, useNavigate} from 'react-router-dom';
+import {Link} from 'react-router-dom';
+import BreadCrumbs from './BreadCrumbs';
 
-export default function Non_Teaching() {
+export default function NonTeaching() {
   function filterDeptById(jsonObject, id) {
       for (const obj of jsonObject) {
         if(obj.id === id) {
@@ -14,42 +14,15 @@ export default function Non_Teaching() {
       }  
     }
   }
-  function filterBasicPayById(jsonObject, id) {
-    for (const obj of jsonObject) {
-      if(obj.id === id) {
-        return obj.basic;
-    }  
-  }
-}
-function filterDesigById(jsonObject, id) {
-  for (const obj of jsonObject) {
-    if(obj.id === id) {
-      return obj.Designation;
-  }  
-}
-}
+  
 
   const deptRef =query(collection(db,'nonteaching_department'));
   const bSRef =query(collection(db,'basicpayscale'));
   //const empRef = query(collection(db,'employees'));
   const [Dept,setDeptData]=useState([]);
-  const [Salary,setSalaryData]=useState([]);
+  //const [Salary,setSalaryData]=useState([]);
   const [eData, setEData] = useState([]);
-  const [loader, setloader] = useState(false);
   
-  useEffect(()=>{
-    onSnapshot(bSRef,(bSSnap)=>{
-      const bSStore=[];
-      bSSnap.forEach((bSal)=>{
-        bSStore.push({
-          id: bSal.id,
-          Designation: bSal.data().Designation, 
-          basic: bSal.data().basic
-        });
-        setSalaryData(bSStore);
-      });
-    });
-  });
   
   useEffect(()=>{
     onSnapshot(deptRef,(deptSnap)=>{
@@ -83,7 +56,6 @@ function filterDesigById(jsonObject, id) {
         });
       });
     setEData(items);
-    setloader(true);
     });
     });
   });
@@ -127,6 +99,7 @@ function filterDesigById(jsonObject, id) {
 
   return (
     <div className='Non_Teaching rendering'>
+      <BreadCrumbs component='NON TEACHING'/>
     <DataTable columns={cols} data={eData} title="Non-Teaching Staffs"pagination responsive fixedHeader fixedHeaderScrollHeight="500px" />
  </div>
   

@@ -1,8 +1,4 @@
-import React, {useState, useEffect} from 'react';
-import {Routes, Route ,Link} from "react-router-dom";
-import Teaching from './Teaching';
-import Non_Teaching from './Non_Teaching';
-
+import React, {useState} from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -15,11 +11,13 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
-import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
+import CurrencyRupeeIcon from '@mui/icons-material/CurrencyRupee';
+import { useNavigate } from 'react-router-dom';
 
-const settings = ['Profile', 'Account Settings', 'Logout'];
 
 const Header = () => {
+  const settings = ['Profile', 'Account Settings', 'Logout'];
+  const navigate = useNavigate();
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
 
@@ -40,126 +38,120 @@ const Header = () => {
 
   return (
     <div className="Header">
-    <AppBar position="static">
-      <Container maxWidth="xl">
-        <Toolbar disableGutters>
-          <AttachMoneyIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
-          <Typography
-            variant="h6"
-            noWrap
-            component="a"
-            href="/"
-            sx={{
-              mr: 2,
-              display: { xs: 'none', md: 'flex' },
-              fontFamily: 'monospace',
-              fontWeight: 700,
-              letterSpacing: '.3rem',
-              color: 'inherit',
-              textDecoration: 'none',
-            }}
-          >
-            SALAIRE
-          </Typography>
-
-          <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
-            <IconButton
-              size="large"
-              aria-label="account of current user"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
-              onClick={handleOpenNavMenu}
-              color="inherit"
-            >
-              <MenuIcon />
-            </IconButton>
-            <Menu
-              id="menu-appbar"
-              anchorEl={anchorElNav}
-              anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'left',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'left',
-              }}
-              open={Boolean(anchorElNav)}
-              onClose={handleCloseNavMenu}
+      <AppBar position="static">
+        <Container maxWidth="xl">
+          <Toolbar disableGutters>
+            <CurrencyRupeeIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
+            <Typography
+              variant="h6"
+              noWrap
+              component="a"
+              href="/"
               sx={{
-                display: { xs: 'block', md: 'none' },
+                mr: 2,
+                display: { xs: 'none', md: 'flex' },
+                fontFamily: 'monospace',
+                fontWeight: 700,
+                letterSpacing: '.3rem',
+                color: 'inherit',
+                textDecoration: 'none',
               }}
             >
-              
-            <MenuItem>
-              <Typography textAlign="center"></Typography>
-            </MenuItem>
-  
-            </Menu>
-          </Box>
-          <AttachMoneyIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
-          <Typography
-            variant="h5"
-            noWrap
-            component="a"
-            href=""
-            sx={{
-              mr: 2,
-              display: { xs: 'flex', md: 'none' },
-              flexGrow: 1,
-              fontFamily: 'monospace',
-              fontWeight: 700,
-              letterSpacing: '.3rem',
-              color: 'inherit',
-              textDecoration: 'none',
-            }}
-          >
-            LOGO
-          </Typography>
-          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-            <Button sx={{ my: 2, color: 'white', display: 'block' }}>Teaching</Button>
-            <Button sx={{ my: 2, color: 'white', display: 'block' }}>Non Teaching</Button>
-          </Box>
+              SALAIRE
+            </Typography>
 
-          <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+            <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+              <IconButton
+                size="large"
+                aria-label="account of current user"
+                aria-controls="menu-appbar"
+                aria-haspopup="true"
+                onClick={handleOpenNavMenu}
+                color="inherit"
+              >
+                <MenuIcon />
               </IconButton>
-            </Tooltip>
-            <Menu
-              sx={{ mt: '45px' }}
-              id="menu-appbar"
-              anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
-            >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
-                </MenuItem>
-              ))}
-            </Menu>
-          </Box>
-        </Toolbar>
-      </Container>
-    </AppBar>
+              <Menu
+                id="menu-appbar"
+                anchorEl={anchorElNav}
+                anchorOrigin={{
+                  vertical: 'bottom',
+                  horizontal: 'left',
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'left',
+                }}
+                open={Boolean(anchorElNav)}
+                onClose={handleCloseNavMenu}
+                sx={{
+                  display: { xs: 'block', md: 'none' },
+                }}
+              >
+                
+              <MenuItem>
+                <Typography textAlign="center"></Typography>
+              </MenuItem>
     
-    <Routes>
-          <Route exact path='/teaching' element={<Teaching/>}/>
-          <Route exact path='/non-teaching' element={<Non_Teaching/>}/>
-  
-      </Routes> 
+              </Menu>
+            </Box>
+            <CurrencyRupeeIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
+            <Typography
+              variant="h5"
+              noWrap
+              component="a"
+              href=""
+              sx={{
+                mr: 2,
+                display: { xs: 'flex', md: 'none' },
+                flexGrow: 1,
+                fontFamily: 'monospace',
+                fontWeight: 700,
+                letterSpacing: '.3rem',
+                color: 'inherit',
+                textDecoration: 'none',
+              }}
+            >
+              LOGO
+            </Typography>
+            <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+              <Button sx={{ my: 2, color: 'white', display: 'block' }} onClick={() => navigate('/Teaching')}>Teaching</Button>
+              <Button sx={{ my: 2, color: 'white', display: 'block' }} onClick={() => navigate('/NonTeaching')}>Non Teaching</Button>
+            </Box>
+
+            <Box sx={{ flexGrow: 0 }}>
+              <Tooltip title="Open settings">
+                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                  <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                </IconButton>
+              </Tooltip>
+              <Menu
+                sx={{ mt: '45px' }}
+                id="menu-appbar"
+                anchorEl={anchorElUser}
+                anchorOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                open={Boolean(anchorElUser)}
+                onClose={handleCloseUserMenu}
+              >
+                {settings.map((setting) => (
+                  <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                    <Typography textAlign="center">{setting}</Typography>
+                  </MenuItem>
+                ))}
+              </Menu>
+            </Box>
+          </Toolbar>
+        </Container>
+      </AppBar>
     </div>  
   );
 };

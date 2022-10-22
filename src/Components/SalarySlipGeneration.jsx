@@ -5,7 +5,7 @@ export default function SalarySlipGeneration() {
   const params=useParams();
   const user_id=params.user_id;
   return (
-    <div>{user_id}
+    <div>User ID: {user_id}
         
     </div>
 

@@ -1,13 +1,15 @@
-import React,{useState, useEffect, Component} from 'react'
-import db from './../firebase';
+import React,{useState, useEffect} from 'react'
+import {db,storage} from './../firebase';
 import {collection, query, onSnapshot,where} from 'firebase/firestore';
-import ReactDOM  from 'react-dom';
+import {ref} from "firebase/storage";
 import DataTable from 'react-data-table-component';
-import { json } from 'react-router-dom';
 import './Styles/Common.css'
-import SalarySlipGeneration from './SalarySlipGeneration';
-import {Route, Link, useNavigate} from 'react-router-dom';
+import BreadCrumbs from './BreadCrumbs';
+import Button from '@mui/material/Button'
+import { useNavigate } from 'react-router-dom';
+
 export default function Teaching() {
+  const navigate = useNavigate();
   function filterDeptById(jsonObject, id) {
       for (const obj of jsonObject) {
         if(obj.id === id) {
@@ -30,21 +32,18 @@ function filterDesigById(jsonObject, id) {
 }
 }
 
-  const deptRef =query(collection(db,'teaching_department'));
+  const deptRef =query(collection(db,'departments'),where('dept_cat','==','dcat1')  );
   const bSRef =query(collection(db,'basicpayscale'));
-  //const empRef = query(collection(db,'employees'));
   const [Dept,setDeptData]=useState([]);
   const [Salary,setSalaryData]=useState([]);
   const [eData, setEData] = useState([]);
-  const [loader, setloader] = useState(false);
-  
   useEffect(()=>{
     onSnapshot(bSRef,(bSSnap)=>{
       const bSStore=[];
       bSSnap.forEach((bSal)=>{
         bSStore.push({
           id: bSal.id,
-          Designation: bSal.data().Designation, 
+          Designation: bSal.data().designation, 
           basic: bSal.data().basic
         });
         setSalaryData(bSStore);
@@ -66,7 +65,7 @@ function filterDesigById(jsonObject, id) {
   });
 
   useEffect(()=>{
-    const items = []
+    var items = [];
     Dept.map((item)=>{
       const empRef = query(collection(db,'employees'),where('department','==',item.id));
       onSnapshot(empRef,(querySnapshot) => {
@@ -77,21 +76,21 @@ function filterDesigById(jsonObject, id) {
         var designation= filterDesigById(Salary,doc.data().paygrade);
         items.push({
           id: doc.id,
-          name: doc.data().name,
+          name: doc.data().name.first+" "+doc.data().name.last,
           department: department,
-          YOEP: doc.data().YOEP,
-          Qualification: doc.data().Qualification,
-          DOJ: doc.data().DOJ.toDate().toDateString(),
+          pyoe: doc.data().pre_yoe.years+"years & "+doc.data().pre_yoe.months+"months",
+          qualification: doc.data().qualification,
+          doj: doc.data().doj.toDate().toDateString(),
           basicpay: basic,
-          designation:designation
+          designation:designation,
         });
       });
-    setEData(items);
-    setloader(true);
+      setEData(items);
     });
     });
   });
 
+  
   const cols=[
     {
       name: 'Name',
@@ -99,18 +98,23 @@ function filterDesigById(jsonObject, id) {
       sortable: true,
     },
     {
+      name: 'Photo',
+      selector: row => row.image,
+      sortable: true,
+    },
+    {
       name: 'Qualification',
-      selector: row => row.Qualification,
+      selector: row => row.qualification,
       sortable: true,
     },
     {
         name: 'Date Of Joining',
-        selector: row => row.DOJ,
+        selector: row => row.doj,
         sortable: true,
     },
     {
-      name: 'Years Of Experience',
-      selector: row => row.YOEP,
+      name: 'Previous Experience',
+      selector: row => row.pyoe,
       sortable: true,
     },
     {
@@ -124,14 +128,14 @@ function filterDesigById(jsonObject, id) {
       sortable: true,
     },
     {
-      cell: row => <button><Link to={`/GenerateSalarySlip/${row.id}`}>Generate Salary Slip</Link></button>,
+      cell: row => <Button onClick={() => navigate(`/SalarySlipGeneration/${row.id}`)}>Generate Salary Slip</Button>,
       allowOverflow: true,
       button: true,
     }];
-
   return (
     <div className='Teaching rendering'>
-       <DataTable columns={cols} data={eData} title="Teaching Staffs" pagination responsive fixedHeader/>
+      <BreadCrumbs component='TEACHING'/>
+      <DataTable columns={cols} data={eData} title="Teaching Staffs" pagination responsive fixedHeader fixedHeaderScrollHeight="400px"/>
     </div>
   );
 }

@@ -1,10 +1,8 @@
-import React,{useState,useEffect, Component } from 'react';
+import React from 'react';
 import {Routes, Route ,Link} from "react-router-dom";
 import Teaching from './Teaching';
-import Non_Teaching from './Non_Teaching';
+import NonTeaching from './NonTeaching';
 import './Styles/NavSidebar.css';
-import ContentLoader,{Facebook,List ,BulletList} from 'react-content-loader'
-import { Rect, Circle } from 'react-content-loader'
 import SalarySlipGeneration from './SalarySlipGeneration';
 
 
@@ -32,7 +30,7 @@ export default function NavSidebar() {
                 </div>           
                 <Routes>
                     <Route exact path='/n1' element={<Teaching/>}/>
-                    <Route exact path='/n2' element={<Non_Teaching/>}/>
+                    <Route exact path='/n2' element={<NonTeaching/>}/>
                     <Route exact path='/GenerateSalarySlip/:user_id' element={<SalarySlipGeneration/>}/>
                 </Routes>            
         </div>   

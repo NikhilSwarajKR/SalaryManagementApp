@@ -1,0 +1,27 @@
+
+.sidebar{
+    width: 200px;
+    position: fixed;
+}
+.options{
+    padding-top: 100px;
+    height: 100vh;
+}
+
+.side-item{
+    width: 200px;
+    padding: 10px;
+    border: 40px;
+    background-color:teal;
+    font-size: 20px;
+    margin-bottom: 5px;
+    text-decoration: none;
+}
+.side-item a{
+    color:white;
+}
+.dropdown{
+    margin-right: 50px;
+}
+
+

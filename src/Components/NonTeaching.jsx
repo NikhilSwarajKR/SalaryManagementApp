@@ -2,83 +2,116 @@ import React,{useState, useEffect} from 'react'
 import {db,storage} from './../firebase';
 import {collection, query, onSnapshot,where} from 'firebase/firestore';
 import DataTable from 'react-data-table-component';
-import './Styles/Common.css';
-import {Link} from 'react-router-dom';
+import './Styles/Common.css'
 import BreadCrumbs from './BreadCrumbs';
+import Button from '@mui/material/Button'
+import { useNavigate } from 'react-router-dom';
 
-export default function NonTeaching() {
+export default function Teaching() {
+  const navigate = useNavigate();
   function filterDeptById(jsonObject, id) {
       for (const obj of jsonObject) {
-        if(obj.id === id) {
-          return obj.dept_name;
+        if(obj.deptID === id) {
+          return obj.deptName;
       }  
     }
   }
-  
+  function filterBPSById(jsonObject, id) {
+    for (const obj of jsonObject) {
+      if(obj.bpsID === id) {
+        return {basicPay:obj.basic, designation:obj.designation};
+    }  
+  }
+}
 
-  const deptRef =query(collection(db,'nonteaching_department'));
-  const bSRef =query(collection(db,'basicpayscale'));
-  //const empRef = query(collection(db,'employees'));
-  const [Dept,setDeptData]=useState([]);
-  //const [Salary,setSalaryData]=useState([]);
-  const [eData, setEData] = useState([]);
-  
+  const deptRef =query(collection(db,'departments'),where('dept_cat','==','dcat2')  );
+  const bpsRef =query(collection(db,'basicpayscale'));
+  const [dept,setDept]=useState([]);
+  const [salary,setSalary]=useState([]);
+  const [data, setData] = useState([]);
+  useEffect(()=>{
+    onSnapshot(bpsRef,(bpsSnap)=>{
+      const bpsStore=[];
+      bpsSnap.forEach((bSal)=>{
+        bpsStore.push({
+          bpsID: bSal.id,
+          designation: bSal.data().designation, 
+          basic: bSal.data().basic
+        });
+        setSalary(bpsStore);
+      });
+    });
+  });
   
   useEffect(()=>{
     onSnapshot(deptRef,(deptSnap)=>{
       const deptStore=[];
       deptSnap.forEach((dept)=>{
         deptStore.push({
-          id:dept.id,
-          dept_name:dept.data().dept_name
+          deptID:dept.id,
+          deptName:dept.data().dept_name
         });
-        setDeptData(deptStore);
+        setDept(deptStore);
       });
     });   
   });
 
   useEffect(()=>{
-    const items = []
-    Dept.map((item)=>{
-      const empRef = query(collection(db,'employees'),where('department','==',item.id));
+    var items = [];
+    dept.map((item)=>{
+      const empRef = query(collection(db,'employees'),where('department','==',item.deptID));
       onSnapshot(empRef,(querySnapshot) => {
-      ;
       querySnapshot.forEach((doc) => {
-        var department= filterDeptById(Dept,doc.data().department);
+        var department= filterDeptById(dept,doc.data().department);
+        let {basicPay,designation}= filterBPSById(salary,doc.data().paygrade);
         items.push({
-          id: doc.id,
-          name: doc.data().name,
+          empID: doc.id,
+          firstName: doc.data().name.first,
+          lastName: doc.data().name.last,
+          deptID:doc.data().department,
           department: department,
-          YOEP: doc.data().YOEP,
-          Qualification: doc.data().Qualification,
-          DOJ: doc.data().DOJ,
-          designation:doc.data().Designation
+          pre_yoe: doc.data().pre_yoe.years+"years & "+doc.data().pre_yoe.months+"months",
+          qualification: doc.data().qualification,
+          doj: doc.data().doj.toDate().toDateString(),
+          basicPay: basicPay,
+          designation:designation,
         });
       });
-    setEData(items);
+      setData(items);
     });
     });
   });
 
+  
   const cols=[
     {
-      name: 'Name',
-      selector: row => row.name,
+      name: 'First Name',
+      selector: row => row.firstName,
+      sortable: true,
+    },
+    {
+      name: 'Last Name',
+      selector: row => row.lastName,
+      sortable: true,
+    },
+    {
+      name: 'Photo',
+      selector: row => row.image,
       sortable: true,
     },
     {
       name: 'Qualification',
-      selector: row => row.Qualification,
+      selector: row => row.qualification,
       sortable: true,
     },
     {
         name: 'Date Of Joining',
-        selector: row => row.DOJ.toDate().toDateString(),
+        selector: row => row.doj,
         sortable: true,
     },
     {
-      name: 'Years Of Experience',
-      selector: row => row.YOEP,
+      name: 'Previous Experience',
+      selector: row => row.pre_yoe,
       sortable: true,
     },
     {
@@ -92,16 +125,14 @@ export default function NonTeaching() {
       sortable: true,
     },
     {
-      cell: row => <button><Link to={`/GenerateSalarySlip/${row.id}`}>Generate Salary Slip</Link></button>,
+      cell: row => <Button onClick={() => navigate('/EmployeeDetails',{state:{empID:row.empID,deptID:row.deptID}})}>View</Button>,
       allowOverflow: true,
       button: true,
     }];
-
   return (
-    <div className='Non_Teaching rendering'>
-      <BreadCrumbs component='NON TEACHING'/>
-    <DataTable columns={cols} data={eData} title="Non-Teaching Staffs"pagination responsive fixedHeader fixedHeaderScrollHeight="500px" />
- </div>
-  
+    <div className='Teaching rendering'>
+      <BreadCrumbs component='TEACHING'/>
+      <DataTable columns={cols} data={data} title="Non-Teaching Staffs" pagination responsive fixedHeader fixedHeaderScrollHeight="400px"/>
+    </div>
   );
 }

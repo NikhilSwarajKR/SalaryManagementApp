@@ -4,8 +4,8 @@ import {Route, Routes} from "react-router-dom";
 import Teaching from './Components/Teaching';
 import NonTeaching from './Components/NonTeaching';
 import Header from './Components/Header';
-import SalarySlipGeneration from './Components/SalarySlipGeneration';
-
+import EmployeeDetails from './Components/EmployeeDetails';
+import GenerateSalarySlip from './Components/GenerateSalarySlip';
 function App() {
     
   return (
@@ -14,7 +14,8 @@ function App() {
       <Routes>
         <Route exact path='/Teaching' element={<Teaching/>}/>
         <Route exact path='/NonTeaching' element={<NonTeaching/>}/>
-        <Route exact path='/SalarySlipGeneration/' element={<SalarySlipGeneration/>}></Route>
+        <Route exact path='/EmployeeDetails' element={<EmployeeDetails/>}></Route>
+        <Route exact path='/GenerateSalarySlip' element={<GenerateSalarySlip/>}></Route>
       </Routes> 
     </div>
   );

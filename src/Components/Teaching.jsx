@@ -1,5 +1,5 @@
 import React,{useState, useEffect} from 'react'
-import {db,storage} from './../firebase';
+import {db,storage} from '../firebase';
 import {collection, query, onSnapshot,where} from 'firebase/firestore';
 import DataTable from 'react-data-table-component';
 import './Styles/Common.css'

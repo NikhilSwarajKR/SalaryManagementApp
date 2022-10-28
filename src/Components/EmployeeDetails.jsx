@@ -1,6 +1,6 @@
 import React, { useState,useEffect } from 'react';
 import {useLocation} from 'react-router-dom';
-import {db,storage} from './../firebase';
+import {db,storage} from '../firebase';
 import {collection, query, onSnapshot,where} from 'firebase/firestore';
 import { Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';

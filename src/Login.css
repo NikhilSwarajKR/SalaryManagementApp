@@ -25,12 +25,12 @@
   font-size: 18px;
   margin-bottom: 10px;
   border: none;
-  color: white;
-  background-color: black;
+  color: black;
+  background-color: turquoise;
 }
 
 .login__google {
-  background-color: #4285f4;
+  background-color: teal;
 }
 
 .login div {

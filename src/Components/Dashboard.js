@@ -6,6 +6,13 @@ import { auth, db, logout } from "./../firebase";
 import { query, collection, getDocs, where } from "firebase/firestore";
 import "./Salary";
 import {Routes, Route ,Link} from "react-router-dom";
+import Button from '@mui/material/Button'; 
+import { styled } from '@mui/material/styles';  
+  
+import IconButton from '@mui/material/IconButton';  
+import PhotoCamera from '@mui/icons-material/PhotoCamera';  
+import Stack from '@mui/material/Stack';  
+  
 
 
 
@@ -18,6 +25,7 @@ function Dashboard() {
  const[department,setdepartment]=useState("");
  //const[yoep,setyoep]=useState("");
  const[doj,setdoj]=useState("");
+ const Input = styled('input')({ display: 'none', }); 
   const navigate = useNavigate();
 
   const fetchUserName = async () => {
@@ -58,16 +66,22 @@ function Dashboard() {
         <div>Department Code: {department}</div>
         
         <div>DOJ: {doj}</div>
+
+     
         <br>
         
-        </br>
+        </br><br></br> <Button variant="contained"  onClick={() =>navigate('/Fileupload')}>Upload image</Button> 
+        
+        <br></br> <Button variant="contained"  onClick={() =>navigate('/Upload')}>Upload file</Button> 
+        <br>
 
-        <div>
-          Click <Link to="/Salary">to view salary details</Link> 
-        </div>
-<br>
+</br> <Button variant="contained"  onClick={() =>navigate('/Salary')}>Salary details</Button> 
 
-</br>
+       
+
+
+
+        
         <button className="dashboard__btn" onClick={logout}>
           Logout
         </button>

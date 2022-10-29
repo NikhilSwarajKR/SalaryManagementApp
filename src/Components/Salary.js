@@ -59,7 +59,7 @@ function Salary() {
   return (
     <div className="dashboard">
       <div className="dashboard__container">
-       <u> Salary details</u>
+    
        
         <br></br>
        

@@ -1,10 +1,10 @@
 import "./App.css";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import Login from "./Login";
-import Register from "./Register";
-import Reset from "./Reset";
-import Dashboard from "./Dashboard";
-import Salary from "./Salary";
+import Login from "./Components/Login";
+import Register from "./Components/Register";
+import Reset from "./Components/Reset";
+import Dashboard from "./Components/Dashboard";
+import Salary from "./Components/Salary";
 
 function App() {
   return (

@@ -16,7 +16,6 @@ import { useNavigate } from 'react-router-dom';
 
 
 const Header = () => {
-  const settings = ['Profile', 'Account Settings', 'Logout'];
   const navigate = useNavigate();
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
@@ -91,9 +90,14 @@ const Header = () => {
               >
                 
               <MenuItem>
-                <Typography textAlign="center"></Typography>
+                <Typography textAlign="center"onClick={() => navigate('/Teaching')}>Teaching</Typography>
               </MenuItem>
-    
+              <MenuItem>
+                <Typography textAlign="center"onClick={() => navigate('/NonTeaching')}>Non Teaching</Typography>
+              </MenuItem>
+              <MenuItem>
+                <Typography textAlign="center"onClick={() => navigate('/')}>Reports</Typography>
+              </MenuItem>
               </Menu>
             </Box>
             <CurrencyRupeeIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
@@ -113,11 +117,12 @@ const Header = () => {
                 textDecoration: 'none',
               }}
             >
-              LOGO
+             SALAIRE
             </Typography>
             <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
               <Button sx={{ my: 2, color: 'white', display: 'block' }} onClick={() => navigate('/Teaching')}>Teaching</Button>
               <Button sx={{ my: 2, color: 'white', display: 'block' }} onClick={() => navigate('/NonTeaching')}>Non Teaching</Button>
+              <Button sx={{ my: 2, color: 'white', display: 'block' }} onClick={() => navigate('/Reports')}>Reports</Button>
             </Box>
 
             <Box sx={{ flexGrow: 0 }}>
@@ -142,11 +147,15 @@ const Header = () => {
                 open={Boolean(anchorElUser)}
                 onClose={handleCloseUserMenu}
               >
-                {settings.map((setting) => (
-                  <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                    <Typography textAlign="center">{setting}</Typography>
-                  </MenuItem>
-                ))}
+              <MenuItem>
+                <Typography textAlign="center"onClick={() => navigate('/')}>Profile</Typography>
+              </MenuItem>
+              <MenuItem>
+                <Typography textAlign="center"onClick={() => navigate('/')}>Change Password</Typography>
+              </MenuItem>
+              <MenuItem>
+                <Typography textAlign="center"onClick={() => navigate('/')}>Logout</Typography>
+              </MenuItem>
               </Menu>
             </Box>
           </Toolbar>

@@ -38,7 +38,9 @@ export default function Teaching() {
         bpsDA: bSal.data().da,
         bpsHRA: bSal.data().hra,
         bpsPF: bSal.data().pf,
-        bpsTA: bSal.data().ta, 
+        bpsPT: bSal.data().pt,
+        bpsTA: bSal.data().ta,
+        bpsAGP: bSal.data().grade_pay, 
       });
     });
 

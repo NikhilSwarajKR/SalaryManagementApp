@@ -1,3 +1,4 @@
+import { async } from '@firebase/util';
 import { Input, Typography,TextField} from '@mui/material';
 import { upload } from '@testing-library/user-event/dist/upload';
 import React, { useState,useEffect } from 'react';
@@ -83,6 +84,11 @@ export default function GenerateSalarySlip() {
     },[loading])
     function uploadTransaction(){
         console.log('Done');
+    }
+    const handleSubmit=async(e)=>{
+        let fromDate=document.getElementById('fromDate').value;
+        let toDate=document.getElementById('toDate').value;
+        let basic=document.getElementById('basic').value;
     }
     return (
         

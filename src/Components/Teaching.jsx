@@ -7,7 +7,6 @@ import BreadCrumbs from './BreadCrumbs';
 import Button from '@mui/material/Button'
 import { useNavigate } from 'react-router-dom';
 import Box from '@mui/material/Box';
-import { DataGrid } from '@mui/x-data-grid';
 
 export default function Teaching() {
   const navigate = useNavigate();
@@ -23,6 +22,7 @@ export default function Teaching() {
     const bpsSnap = await getDocs(bpsRef);
     let deptStore=[],bpsStore=[],empStore=[];
     let temp=[];
+    
     deptSnap.forEach((dept)=>{
       deptStore.push({
         deptID:dept.id,

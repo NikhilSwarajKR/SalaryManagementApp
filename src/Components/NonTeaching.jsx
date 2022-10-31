@@ -6,11 +6,7 @@ import './Styles/Common.css'
 import BreadCrumbs from './BreadCrumbs';
 import Button from '@mui/material/Button'
 import { useNavigate } from 'react-router-dom';
-import DataFetcher from './DataFetcher';
 import Box from '@mui/material/Box';
-import { DataGrid } from '@mui/x-data-grid';
-import { async } from '@firebase/util';
-import { wait } from '@testing-library/user-event/dist/utils';
 
 export default function Teaching() {
   const navigate = useNavigate();

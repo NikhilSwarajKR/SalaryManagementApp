@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { storage } from "./../firebase";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+ import React from 'react'
  
 function Fileupload() {
     // State to store uploaded file

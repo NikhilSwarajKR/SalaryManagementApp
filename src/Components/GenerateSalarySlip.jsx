@@ -137,8 +137,7 @@ export default function GenerateSalarySlip() {
         };
        try{
           await setDoc(doc(db, "transactions", transID), docData);
-          alert('Salary Slip Generated Successfully');
-          navigate('/EmployeeDetails');
+          navigate('/EmployeeDetails/EmployeeReports');
         }
         catch(error){
           console.log(error);

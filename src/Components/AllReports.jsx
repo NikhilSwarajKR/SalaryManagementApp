@@ -93,7 +93,7 @@ function AllReports() {
       button: true,
     },
     {
-      cell: row => <Button variant="outlined" >Delete</Button>,
+      cell: row => <Button variant="outlined" color='error'>Delete</Button>,
       allowOverflow: true,
       button: true,
     }];

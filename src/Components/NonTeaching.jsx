@@ -111,7 +111,7 @@ export default function Teaching() {
      },
  
     {
-      cell: row => <Button variant="outlined" onClick={()=>navigateEmployee(row.empID)}>View</Button>,
+      cell: row => <Button variant="contained" color='success' onClick={()=>navigateEmployee(row.empID)}>View</Button>,
       allowOverflow: true,
       button: true,
     }];

@@ -1,16 +1,31 @@
-import { async } from '@firebase/util';
-import { Input, Typography,TextField} from '@mui/material';
-import { upload } from '@testing-library/user-event/dist/upload';
+import {TextField,Button} from '@mui/material';
 import React, { useState,useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import {useLocation} from 'react-router-dom';
+import Box from '@mui/material/Box';
+import InputAdornment from '@mui/material/InputAdornment';
+import Alert from '@mui/material/Alert';
+import Snackbar from '@mui/material/Snackbar';
+import { doc, setDoc, Timestamp } from "firebase/firestore";
+import {db} from './../firebase';
+import uuid from 'react-uuid';
 
 
 export default function GenerateSalarySlip() {
     const [loading,setLoading]= useState(false);
-    
+    const [open, setOpen] = useState(false);
     const navigate = useNavigate();
     const empData=JSON.parse(localStorage.getItem('RefEmpData'));
+      const errorHandleOpen= () => {
+        setOpen(true);
+      };
+
+      const errorHandleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+          return;
+        }
+
+        setOpen(false);
+      };
     function loadData(){
         var pre_exp =Math.floor(((empData.pre_yoe.years*12)+empData.pre_yoe.months)/12)/2;
         var doj=new Date(empData.doj.seconds*1000);
@@ -29,117 +44,147 @@ export default function GenerateSalarySlip() {
         var gradePay=empData.bpsAGP;
         var ta=empData.bpsTA;
         var pt=empData.bpsPT;
-        document.getElementById('basic').value=basicPay;
-        document.getElementById('hra').value=hra;
-        document.getElementById('da').value=da;
-        document.getElementById('pf').value=pf;
-        document.getElementById('pt').value=pt;
-        document.getElementById('agp').value=gradePay;
-        document.getElementById('ta').value=ta;
+        document.getElementById('basic').value=Math.round(basicPay);
+        document.getElementById('hra').value=Math.round(hra);
+        document.getElementById('da').value=Math.round(da);
+        document.getElementById('pf').value=Math.round(pf);
+        document.getElementById('pt').value=Math.round(pt);
+        document.getElementById('agp').value=Math.round(gradePay);
+        document.getElementById('ta').value=Math.round(ta);
+        document.getElementById('submitButton').disabled = true;
         setLoading(true);
     }
-    function calculateSalary(){
+    function handleChange(){
         var fromDate = new Date(document.getElementById('fromDate').value);
         var toDate = new Date(document.getElementById('toDate').value);
-        var leaves = document.getElementById('leaves').value;
-        var pfec=document.getElementById('pfec').value;
+        if(fromDate>toDate){
+          document.getElementById('submitButton').disabled = true;
+          errorHandleOpen();
+          return
+        }
+        else{
+          document.getElementById('submitButton').disabled = false;
+          errorHandleClose();
+        }
+        var leaves = parseFloat(document.getElementById('leaves').value);
+        var pfec=parseFloat(document.getElementById('pfec').value);
+        
         var pre_exp =Math.floor(((empData.pre_yoe.years*12)+empData.pre_yoe.months)/12)/2;
         var days=(toDate.getTime() - fromDate.getTime())/(1000 * 3600 * 24)+1;
         var doj=new Date(empData.doj.seconds*1000);
         var cur_exp=Math.floor((fromDate.getTime()-doj.getTime())/(1000 * 3600 * 24)/365);
-        var basicPay=empData.bpsBasic;
+        var basicPay=parseFloat(empData.bpsBasic);
+        var gradePay=parseFloat(empData.bpsAGP);
+        var ta=parseFloat(empData.bpsTA);
         var basicInc;
         var exp=pre_exp+cur_exp;
         for(let i=0;i<exp;i++){
             basicInc=basicPay*0.03;
             basicPay=basicPay+basicInc;
         }
-        var hra= basicPay*empData.bpsHRA/100;
-        var da= basicPay*empData.bpsDA/100;
-        var perDayBasic=basicPay/30;
-        var perDayHRA=hra/30;
-        var perDayDA=da/30;
-        var lossofpay=leaves*(perDayBasic+perDayHRA+perDayDA);
-        var pf= basicPay*empData.bpsPF/100;
-        var gradePay=empData.bpsAGP;
-        var ta=empData.bpsTA
-        var pt=empData.bpsPT;
-        var grossSal=days*(perDayBasic+perDayHRA+perDayDA)+gradePay+ta-lossofpay-pt;
-        var totDed=pf+pfec
+        var hra= Math.round((basicPay*parseFloat(empData.bpsHRA)/100),2);
+        var da= basicPay*parseFloat(empData.bpsDA)/100;
+        var perDaySal=(basicPay+hra+da+gradePay+ta)/30;
+        var lossOfPay=leaves*(perDaySal);
+        var totDays=days-leaves;
+        var pf= basicPay*parseFloat(empData.bpsPF)/100;
+        var pt=parseFloat(empData.bpsPT);
+        var grossSal=days*(perDaySal);
+        var totDed=lossOfPay+pfec+pf;
         var netSal=grossSal-totDed;
-        document.getElementById('basic').value=basicPay;
-        document.getElementById('hra').value=hra;
-        document.getElementById('da').value=da;
-        document.getElementById('salcut').value=lossofpay;
-        document.getElementById('pf').value=pf;
-        document.getElementById('pt').value=pt;
-        document.getElementById('grossSal').value=grossSal;
-        document.getElementById('totaldeduction').value=totDed;
-        document.getElementById('netSal').value=netSal;
-        document.getElementById('agp').value=gradePay;
-        document.getElementById('ta').value=ta;
+        document.getElementById('basic').value=Math.round(basicPay);
+        document.getElementById('hra').value=Math.round(hra);
+        document.getElementById('da').value=Math.round(da);
+        document.getElementById('salcut').value=Math.round(lossOfPay);
+        document.getElementById('pf').value=Math.round(pf);
+        document.getElementById('pt').value=Math.round(pt);
+        document.getElementById('grossSal').value=Math.round(grossSal);
+        document.getElementById('totDed').value=Math.round(totDed);
+        document.getElementById('netSal').value=Math.round(netSal);
+        document.getElementById('agp').value=Math.round(gradePay);
+        document.getElementById('ta').value=Math.round(ta);
+        document.getElementById('totDays').value=Math.round(totDays);
     }
     useEffect(()=>{
         loadData();
-    },[loading])
-    function uploadTransaction(){
-        console.log('Done');
-    }
-    const handleSubmit=async(e)=>{
-        let fromDate=document.getElementById('fromDate').value;
-        let toDate=document.getElementById('toDate').value;
-        let basic=document.getElementById('basic').value;
+    },[loading]);
+
+    const uploadTransaction=async(e)=>{
+        e.preventDefault();
+        var transID = uuid().replaceAll('-', '');
+        const docData = {
+          empID:empData.empID,
+          empName:empData.firstName+" "+empData.lastName,
+          deptName:empData.deptName,
+          designation:empData.designation,
+          fromDate: Timestamp.fromDate(new Date(document.getElementById('fromDate').value)),
+          toDate: Timestamp.fromDate(new Date(document.getElementById('toDate').value)),
+          transactionDate: Timestamp.fromDate(new Date()),
+          basicPay:parseFloat(document.getElementById('basic').value),
+          HRA:parseFloat(document.getElementById('hra').value), 
+          DA:parseFloat(document.getElementById('da').value), 
+          GradePay:parseFloat(document.getElementById('agp').value),
+          TA:parseFloat(document.getElementById('ta').value),
+          totalWorkingDays:parseInt(document.getElementById('totDays').value),
+          PT:parseFloat(document.getElementById('pt').value),
+          leaves:parseFloat(document.getElementById('leaves').value), 
+          lossOfPay:parseFloat(document.getElementById('salcut').value), 
+          PF:parseFloat(document.getElementById('pf').value),
+          PFEC:parseFloat(document.getElementById('pf').value), 
+          grossSal:parseFloat(document.getElementById('grossSal').value), 
+          totalDeduction:parseFloat(document.getElementById('totDed').value), 
+          netSal:parseFloat(document.getElementById('netSal').value), 
+        };
+       try{
+          await setDoc(doc(db, "transactions", transID), docData);
+          alert('Salary Slip Generated Successfully');
+          navigate('/EmployeeDetails');
+        }
+        catch(error){
+          console.log(error);
+        }
     }
     return (
         
        <div className="SalarySlip">
-            <form onSubmit={uploadTransaction}>
-            <Typography htmlFor="fromDate" >From Date:</Typography>  
-            <Input type="date" name="fromDate" id="fromDate" onChange={calculateSalary}/>
-            <br />
-            <Typography htmlFor="toDate" >To Date:</Typography>  
-            <Input type="date" name="toDate" id="toDate"onChange={calculateSalary}/>
-            <br />
-            <Typography htmlFor="basic">Basic: </Typography>   
-            <Input type="text" id='basic' readOnly/>
-            <br />
-            <Typography htmlFor="hra">HRA: </Typography>   
-            <Input type="text" id='hra' readOnly/>
-            <br />
-            <Typography htmlFor="da">DA: </Typography>   
-            <Input type="text" id='da' readOnly/>
-            <br />
-            <Typography htmlFor="agp">Academic Grade Pay </Typography>   
-            <Input type="text" id='agp' readOnly/>
-            <br />
-            <Typography htmlFor="pt">Profession Tax </Typography>   
-            <Input type="text" id='pt' readOnly/>
-            <br />
-            <Typography htmlFor="ta">Travel Allowance </Typography>   
-            <Input type="text" id='ta' readOnly/>
-            <br />
-            <Typography htmlFor="leaves">Leaves Taken</Typography>   
-            <Input type="number" id="leaves" min="0" max="30" onChange={calculateSalary} defaultValue='0'/>
-            <br />
-            <Typography htmlFor="salcut">Loss Of Pay: </Typography>   
-            <Input type="text" id='salcut' readOnly/>
-            <br />
-            <Typography htmlFor="pf">PF: </Typography>   
-            <Input type="text" id='pf' readOnly/>
-            <br />
-            <Typography htmlFor="pfec">PF Employee Contribution: </Typography>   
-            <Input type="number" id='pfec' onChange={calculateSalary} defaultValue='0'/>
-            <br />
-            <Typography htmlFor="grossSal">Gross Salary</Typography>   
-            <Input type="number" id='grossSal'  defaultValue='0' readOnly/>
-            <br />
-            <Typography htmlFor="totaldeduction">Total Deduction</Typography>   
-            <Input type="number" id='totaldeduction'  defaultValue='0' readOnly/>
-            <br />
-            <Typography htmlFor="netsal">Net Salary</Typography>   
-            <Input type="number" id='netSal'  defaultValue='0' readOnly/>
-            <button type="submit">Submit</button>
-            </form>
+        <Snackbar open={open}  onClose={errorHandleClose}>
+            <Alert severity="error" sx={{ width: '100%' }}>Invalid Date Range</Alert>
+        </Snackbar>
+         <Box  component="form"
+            sx={{
+              '& .MuiTextField-root': { m: 1, width: '30ch' },
+            }}
+            noValidate
+            autoComplete="off">
+            <div>
+                <TextField id="fromDate" onChange={handleChange} type="date" InputProps={{startAdornment: <InputAdornment position="start">From Date</InputAdornment>}}required/>  
+                <TextField id="toDate" onChange={handleChange} type="date" InputProps={{startAdornment: <InputAdornment position="start">To Date</InputAdornment>}}required/>
+            </div>
+            
+            <div>            
+                <TextField id="basic" label="Basic Salary" type="number" InputProps={{inputProps: {defaultValue:0,readOnly: true}}} required/>
+                <TextField id="hra" label="House Rent Allowance(HRA)"  type="number" InputProps={{inputProps: {defaultValue:0,readOnly: true}}} required/>
+                <TextField id="da" label="Dearness Allowance(DA)" type="number" InputProps={{inputProps: {defaultValue:0,readOnly: true}}} required/>
+                <TextField id="agp" label="Academic Grade Pay" type="number"InputProps={{inputProps: {defaultValue:0,readOnly: true}}} required/>
+                <TextField id="ta" label="Travel Allowance" type="number" InputProps={{inputProps: {defaultValue:0,readOnly: true}}}required/>          
+            </div>
+              
+            <div>
+                <TextField id="totDays" label="No of Working Days" type="number" InputProps={{inputProps: {defaultValue:0,readOnly: true}}}required/>
+                <TextField id="pt" label="Profession Tax" type="number" InputProps={{inputProps: {defaultValue:0,readOnly: true}}}required/>
+                <TextField id="leaves" label="Number of Leaves Taken" onChange={handleChange} type="number" InputProps={{inputProps: { max: 30, min: 0,defaultValue:0}}}/>
+                <TextField id="salcut" label="Loss of Pay" type="number" InputProps={{inputProps: {defaultValue:0,readOnly: true}}}/>
+                <TextField id="pf" label="Provident Fund(PF)" type="number" InputProps={{inputProps: {defaultValue:0,readOnly: true}}} required/>
+                <TextField id="pfec" label="PF Employee Contribution" onChange={handleChange} type="number" InputProps={{inputProps: {min: 0,defaultValue:0}}}required/>
+                <TextField id="grossSal" label="Gross Salary" type="number" InputProps={{inputProps: {defaultValue:0,readOnly: true}}} required/>
+                <TextField id="totDed" label="Total Deduction" type="number"InputProps={{inputProps: {defaultValue:0,readOnly: true}}} required/>
+                <TextField id="netSal" label="Net Salary" type="number" InputProps={{inputProps: {defaultValue:0,readOnly: true}}} required/>
+            </div>
+            <div>
+                <Button variant="contained" id="submitButton" onClick={uploadTransaction}>Submit</Button>
+            </div>
+          
+           </Box>       
        </div>
     )
 }

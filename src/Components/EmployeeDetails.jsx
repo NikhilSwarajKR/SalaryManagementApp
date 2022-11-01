@@ -1,25 +1,29 @@
 import React, { useState,useEffect } from 'react';
-import { Button, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
+
 import {Outlet } from "react-router-dom";
+import BottomNavigation from '@mui/material/BottomNavigation';
+import BottomNavigationAction from '@mui/material/BottomNavigationAction';
+
+import SummarizeIcon from '@mui/icons-material/Summarize';
+import NoteAddIcon from '@mui/icons-material/NoteAdd';
 
 
 export default function EmployeeDetails() {
   const navigate = useNavigate();
   const data=JSON.parse(localStorage.getItem('RefEmpData'));
-  const navigateGenerationSlip=()=>{
-    navigate('GenerateSalarySlip');
-  }
   return (
     <div className='rendering'>
+       
         <Box
         component="form"
         sx={{
-          '& .MuiTextField-root': { m: 2, width: '25ch' },
+          '& .MuiTextField-root': { m: 2, width: '30ch' },
         }}
         >
+        
         <div>
           <TextField
               id="filled-read-only-input"
@@ -86,11 +90,15 @@ export default function EmployeeDetails() {
             variant="filled"
           />
         </div>
-        <div className="class">
-          <Button onClick={navigateGenerationSlip}>Generate Salary Slip</Button>
-          <Outlet />
-        </div>
       </Box>
+     
+      <BottomNavigation showLabels>
+          <BottomNavigationAction label="Generate Salary Slip" onClick={()=> navigate('GenerateSalarySlip')} icon={<NoteAddIcon/>} />
+          <BottomNavigationAction label="Reports"  onClick={()=> navigate('EmployeeReports')} icon={<SummarizeIcon/>} />
+      </BottomNavigation>
+      
+
+      <Outlet/>
     </div>
   )
 }

@@ -95,12 +95,6 @@ export default function Teaching() {
       sortable: true,
     },
     {
-        name: 'Date Of Joining',
-        selector: row => row.doj.toDate().toLocaleDateString('en-IN'),
-        sortable: true,
-    },
-   
-    {
       name: 'Designation',
       selector: row => row.designation,
       sortable: true,
@@ -111,7 +105,13 @@ export default function Teaching() {
       sortable: true,
     },
     {
-      cell: row => <Button onClick={()=>navigateEmployee(row.empID)}>View</Button>,
+      name: 'Date Of Joining',
+      selector: row => row.doj.toDate().toLocaleDateString('en-IN'),
+      sortable: true,
+     },
+ 
+    {
+      cell: row => <Button variant="outlined" onClick={()=>navigateEmployee(row.empID)}>View</Button>,
       allowOverflow: true,
       button: true,
     }];

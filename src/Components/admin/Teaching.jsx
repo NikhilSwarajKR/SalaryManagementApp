@@ -1,12 +1,12 @@
-import React,{useState, useEffect} from 'react'
-import {db,storage} from './../firebase';
+import React,{useState, useEffect} from 'react';
+import {db,storage} from '../../firebase';
 import {collection, query,where, getDocs} from 'firebase/firestore';
 import DataTable from 'react-data-table-component';
-import './Styles/Common.css'
+import './styles/Common.css';
 import BreadCrumbs from './BreadCrumbs';
-import Button from '@mui/material/Button'
-import { useNavigate } from 'react-router-dom';
-import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import {useNavigate} from 'react-router-dom';
+import Box from '@mui/material/Box';;
 
 export default function Teaching() {
   const navigate = useNavigate();
@@ -101,13 +101,7 @@ export default function Teaching() {
       name: 'Qualification',
       selector: row => row.qualification,
       sortable: true,
-    },
-    {
-        name: 'Date Of Joining',
-        selector: row => row.doj.toDate().toLocaleDateString('en-IN'),
-        sortable: true,
-    },
-   
+    }, 
     {
       name: 'Designation',
       selector: row => row.designation,
@@ -119,7 +113,12 @@ export default function Teaching() {
       sortable: true,
     },
     {
-      cell: row => <Button onClick={()=>navigateEmployee(row.empID)}>View</Button>,
+      name: 'Date Of Joining',
+      selector: row => row.doj.toDate().toLocaleDateString('en-IN'),
+      sortable: true,
+  },
+    {
+      cell: row => <Button variant="contained" color='success' onClick={()=>navigateEmployee(row.empID)}>View</Button>,
       allowOverflow: true,
       button: true,
     }];

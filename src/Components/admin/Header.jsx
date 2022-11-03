@@ -96,7 +96,7 @@ const Header = () => {
                 <Typography textAlign="center"onClick={() => navigate('/NonTeaching')}>Non Teaching</Typography>
               </MenuItem>
               <MenuItem>
-                <Typography textAlign="center"onClick={() => navigate('/')}>Reports</Typography>
+                <Typography textAlign="center"onClick={() => navigate('/Reports')}>Reports</Typography>
               </MenuItem>
               </Menu>
             </Box>

@@ -8,6 +8,7 @@ import EmployeeDetails from './Components/admin/EmployeeDetails';
 import GenerateSalarySlip from './Components/admin/GenerateSalarySlip';
 import EmployeeReports from './Components/admin/EmployeeReports';
 import AllReports from './Components/admin/AllReports';
+import ViewReport from './Components/admin/ViewReport';
 
 function App() {
     
@@ -21,8 +22,9 @@ function App() {
             <Route exact path='GenerateSalarySlip' element={<GenerateSalarySlip/>}></Route>
             <Route exact path='EmployeeReports' element={<EmployeeReports/>}></Route>
         </Route>
-        <Route exact path='Reports'element={<AllReports/>}></Route>
-      </Routes> 
+        <Route exact path='Reports' element={<AllReports/>}></Route>
+        <Route exact path='ViewReport' element={<ViewReport/>}></Route>
+      </Routes>
     </div>
   );
 }

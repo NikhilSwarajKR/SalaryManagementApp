@@ -8,16 +8,25 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import Alert from '@mui/material/Alert';
+import jsPDF from 'jspdf';
+import ViewReport from './ViewReport';
 
 function EmployeeReports() {
   const [transactionsData, setData] = useState([]);
   const [loading,setLoading]= useState(false);
   const empData=JSON.parse(localStorage.getItem('RefEmpData'));
+  const navigate = useNavigate();
+
   
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-
+ 
+ 
+  const openViews=()=>{
+      window.open('<ViewReport/>');
+  }
+  
   const fetchReports=async()=>{
 
     const empTransRef =query(collection(db,'transactions'),where('empID','==',empData.empID));
@@ -103,7 +112,7 @@ function EmployeeReports() {
       sortable: true,
     },
     {
-      cell: row => <Button variant="contained">View</Button>,
+      cell: row => <Button variant="contained" onClick={openViews}>View</Button>,
       allowOverflow: true,
       button: true,
     },

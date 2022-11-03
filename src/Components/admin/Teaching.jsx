@@ -1,11 +1,11 @@
 import React,{useState, useEffect} from 'react';
-import {db,storage} from './../firebase';
+import {db,storage} from '../../firebase';
 import {collection, query,where, getDocs} from 'firebase/firestore';
 import DataTable from 'react-data-table-component';
-import './Styles/Common.css';
+import './styles/Common.css';
 import BreadCrumbs from './BreadCrumbs';
 import Button from '@mui/material/Button';
-import { useNavigate } from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 import Box from '@mui/material/Box';;
 
 export default function Teaching() {

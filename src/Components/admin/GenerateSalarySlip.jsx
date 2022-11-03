@@ -6,7 +6,7 @@ import InputAdornment from '@mui/material/InputAdornment';
 import Alert from '@mui/material/Alert';
 import Snackbar from '@mui/material/Snackbar';
 import { doc, setDoc, Timestamp } from "firebase/firestore";
-import {db} from './../firebase';
+import {db} from '../../firebase';
 import uuid from 'react-uuid';
 
 

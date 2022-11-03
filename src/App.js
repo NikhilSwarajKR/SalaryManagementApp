@@ -1,13 +1,13 @@
 import React from 'react';
 import './App.css';
 import {Route, Routes} from "react-router-dom";
-import Teaching from './Components/Teaching';
-import NonTeaching from './Components/NonTeaching';
-import Header from './Components/Header';
-import EmployeeDetails from './Components/EmployeeDetails';
-import GenerateSalarySlip from './Components/GenerateSalarySlip';
-import EmployeeReports from './Components/EmployeeReports';
-import AllReports from './Components/AllReports';
+import Teaching from './Components/admin/Teaching';
+import NonTeaching from './Components/admin/NonTeaching';
+import Header from './Components/admin/Header';
+import EmployeeDetails from './Components/admin/EmployeeDetails';
+import GenerateSalarySlip from './Components/admin/GenerateSalarySlip';
+import EmployeeReports from './Components/admin/EmployeeReports';
+import AllReports from './Components/admin/AllReports';
 
 function App() {
     

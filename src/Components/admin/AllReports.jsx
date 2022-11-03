@@ -1,26 +1,19 @@
 import React,{useState, useEffect} from 'react';
-import {collection, query,where, getDocs,doc,deleteDoc} from 'firebase/firestore';
+import {collection, query,where, getDocs} from 'firebase/firestore';
 import DataTable from 'react-data-table-component';
 import Button from '@mui/material/Button'
 import { useNavigate } from 'react-router-dom';
-import {db,storage} from './../firebase';
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-import Modal from '@mui/material/Modal';
-import Alert from '@mui/material/Alert';
+import {db,storage} from '../../firebase';
 
-function EmployeeReports() {
+
+function AllReports() {
   const [transactionsData, setData] = useState([]);
   const [loading,setLoading]= useState(false);
   const empData=JSON.parse(localStorage.getItem('RefEmpData'));
-  
-  const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
 
   const fetchReports=async()=>{
 
-    const empTransRef =query(collection(db,'transactions'),where('empID','==',empData.empID));
+    const empTransRef =query(collection(db,'transactions'));
     const TransSnap = await getDocs(empTransRef);
     let transactionsStore=[];
     
@@ -58,33 +51,25 @@ function EmployeeReports() {
     fetchReports();
   },[loading]);
 
-  const handleModal=(transID)=>{
-    handleOpen();
-    localStorage.setItem("transID",transID);
-  }
-  const handleDelete=async()=>{
-    let transID=localStorage.getItem('transID');
-    localStorage.removeItem('transID');
-    await deleteDoc(doc(db, "transactions",transID));
-    handleClose();
-    window.location.reload();
-  }
-  const style = {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: 400,
-    bgcolor: 'background.paper',
-    border: '2px solid #000',
-    boxShadow: 24,
-    alignItems:'center',
-    p: 4,
-  };
   const cols=[
     {
       name: 'Transaction ID',
       selector: row => row.transID,
+      sortable: true,
+    },
+    {
+      name: 'Employee ID',
+      selector: row => row.empID.toUpperCase(),
+      sortable: true,
+    },
+    {
+      name: 'Employee Name',
+      selector: row => row.empName,
+      sortable: true,
+    },
+    {
+      name: 'Department',
+      selector: row => row.deptName,
       sortable: true,
     },
     {
@@ -103,33 +88,20 @@ function EmployeeReports() {
       sortable: true,
     },
     {
-      cell: row => <Button variant="contained">View</Button>,
+      cell: row => <Button variant="outlined">View</Button>,
       allowOverflow: true,
       button: true,
     },
     {
-      cell: row => <Button variant="contained" color='error' onClick={()=>handleModal(row.transID)}>Delete</Button>,
+      cell: row => <Button variant="outlined" color='error'>Delete</Button>,
       allowOverflow: true,
       button: true,
     }];
     
     return(
-      <div className='Teaching rendering'>
-        <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <Box sx={style}>
-          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            <Alert severity="error">Deleting Transaction: Confirm &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<Button variant="contained" color="error" onClick={handleDelete}>Delete</Button></Alert>
-          </Typography>
-          
-        </Box>
-      </Modal>
+      <div className='AllReorts rendering'>
           {loading ?(
-            <DataTable columns={cols} data={transactionsData} title="Employee Pay Slips" pagination responsive fixedHeader fixedHeaderScrollHeight="400px"/>
+            <DataTable columns={cols} data={transactionsData} title="Reports" pagination responsive fixedHeader fixedHeaderScrollHeight="400px"/>
           ):(
             <h1>Loading</h1>
           )}
@@ -137,4 +109,4 @@ function EmployeeReports() {
     );
 }
 
-export default EmployeeReports
+export default AllReports;

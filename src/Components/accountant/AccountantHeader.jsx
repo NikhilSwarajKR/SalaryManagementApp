@@ -15,7 +15,7 @@ import CurrencyRupeeIcon from '@mui/icons-material/CurrencyRupee';
 import { useNavigate } from 'react-router-dom';
 
 
-const Header = () => {
+const AccountantHeader = () => {
   const navigate = useNavigate();
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
@@ -164,4 +164,4 @@ const Header = () => {
     </div>  
   );
 };
-export default Header;
+export default AccountantHeader;

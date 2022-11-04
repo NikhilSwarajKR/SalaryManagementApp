@@ -1,7 +1,8 @@
 
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { auth, logInWithEmailAndPassword, signInWithGoogle } from "./../firebase";
+import { auth } from "../firebase";
+import {logout,logInWithEmailAndPassword, signInWithGoogle} from "./EmployeeAuth";
 import { useAuthState } from "react-firebase-hooks/auth";
 import "./Login.css";
 
@@ -16,7 +17,7 @@ function Login() {
       // maybe trigger a loading screen
       return;
     }
-    if (user) navigate("/dashboard");
+    if (user) navigate("/EmployeeDashboard");
   }, [user, loading]);
 
   return (
@@ -46,10 +47,10 @@ function Login() {
           Login with Google
         </button>
         <div>
-          <Link to="/reset">Forgot Password</Link>
+          <Link to="/EmployeeReset">Forgot Password</Link>
         </div>
         <div>
-          Don't have an account? <Link to="/register">Register</Link> now.
+          Don't have an account? <Link to="/EmployeeRegister">Register</Link> now.
         </div>
       </div>
     </div>

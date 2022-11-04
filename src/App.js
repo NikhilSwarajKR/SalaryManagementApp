@@ -1,18 +1,23 @@
 import "./App.css";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import Login from "./Components/Login";
-import Aclogin from "./Components/Aclogin";
-import Adlogin from "./Components/Adlogin";
-import Register from "./Components/Register";
-import Reset from "./Components/Reset";
-import Dashboard from "./Components/Dashboard";
-import Addashboard from "./Components/Addashboard";
-import Acdashboard from "./Components/Acdashboard";
+import EmployeeLogin from "./Components/EmployeeLogin";
+import Accountantlogin from "./Components/Accountantlogin";
+import Adminlogin from "./Components/Adminlogin";
+import EmployeeRegister from "./Components/EmployeeRegister";
+import Adminregister from "./Components/Adminregister";
+import Accountantregister from "./Components/Accountantregister";
+import EmployeeReset from "./Components/EmployeeReset";
+import Adminreset from "./Components/Adminreset";
+import Accountantreset from "./Components/Accountantreset";
+import EmployeeDashboard from "./Components/EmployeeDashboard";
+import Admindashboard from "./Components/Admindashboard";
+import Accountantdashboard from "./Components/Accountantdashboard";
 import Salary from "./Components/Salary";
 import Welcome from "./Components/Welcome";
 import Upload from "./Components/Upload";
-import Fileupload from "./Components/Fileupload";
-
+import Pdf from "./Components/Pdf";
+import Head from "./Components/Head";
+import GenerateSalarySlip from "./Components/GenerateSalarySlip";
 
 function App() {
   return (
@@ -20,17 +25,24 @@ function App() {
       <Router>
         <Routes>
         <Route exact path="/" element={<Welcome />} />
-        <Route exact path="/aclogin" element={<Aclogin />} />
-        <Route exact path="/adlogin" element={<Adlogin />} />
-          <Route exact path="/login" element={<Login />} />
-          <Route exact path="/register" element={<Register />} />
-          <Route exact path="/reset" element={<Reset />} />
-          <Route exact path="/dashboard" element={<Dashboard />} />
-          <Route exact path="/addashboard" element={<Addashboard />} />
-          <Route exact path="/acdashboard" element={<Acdashboard />} />
+        <Route exact path="/accountantlogin" element={<Accountantlogin />} />
+        <Route exact path="/adminlogin" element={<Adminlogin />} />
+          <Route exact path="/EmployeeLogin" element={<EmployeeLogin />} />
+          <Route exact path="/EmployeeRegister" element={<EmployeeRegister />} />
+          <Route exact path="/Adminregister" element={<Adminregister />} />
+          <Route exact path="/Accountantregister" element={<Accountantregister />} />
+          <Route exact path="/EmployeeReset" element={<EmployeeReset />} />
+          <Route exact path="/Accountantreset" element={<Accountantreset />} />
+          <Route exact path="/Adminreset" element={<Adminreset />} />
+          <Route exact path="/Head" element={<Head />} />
+          <Route exact path="/EmployeeDashboard" element={<EmployeeDashboard />} />
+          <Route exact path="/admindashboard" element={<Admindashboard />} />
+          <Route exact path="/accountantdashboard" element={<Accountantdashboard />} />
           <Route exact path="/Salary" element={<Salary />} />
           <Route exact path="/Upload" element={<Upload />} />
-          <Route exact path="/Fileupload" element={<Fileupload />} />
+          <Route exact path="/Pdf" element={<Pdf />} />
+          <Route exact path="/GenerateSalarySlip" element={<GenerateSalarySlip />} />
+         
           
         </Routes>
       </Router>

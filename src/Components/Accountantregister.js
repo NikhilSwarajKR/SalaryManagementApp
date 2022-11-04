@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { Link, useNavigate } from "react-router-dom";
-import {
-  auth,
-  registerWithEmailAndPassword,
-  signInWithGoogle,
-} from "./../firebase";
+import {auth} from "../firebase";
+import {registerWithEmailAndPassword,
+  signInWithGoogle} from "./AccountantAuth";
 import "./Register.css";
 
 function Register() {
@@ -22,7 +20,7 @@ function Register() {
 
   useEffect(() => {
     if (loading) return;
-    if (user) navigate("/dashboard");
+    if (user) navigate("/Accountantdashboard");
   }, [user, loading]);
 
   return (
@@ -60,7 +58,7 @@ function Register() {
         </button>
 
         <div>
-          Already have an account? <Link to="/">Login</Link> now.
+          Already have an account? <Link to="/Accountantlogin">Login</Link> now.
         </div>
       </div>
     </div>

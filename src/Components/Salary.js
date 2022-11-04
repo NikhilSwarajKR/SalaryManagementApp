@@ -2,11 +2,14 @@ import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useNavigate } from "react-router-dom";
 import "./Dashboard.css";
-import { auth, db, logout } from "./../firebase";
+import { auth, db } from "./../firebase";
 import { query, collection, getDocs, where } from "firebase/firestore";
 import "./Salary";
 import {Routes, Route ,Link} from "react-router-dom";
-
+import Button from '@mui/material/Button'; 
+import { styled } from '@mui/material/styles';  
+import jsPDF from "jspdf";
+import {logout} from "./EmployeeAuth";
 
 
 
@@ -16,7 +19,7 @@ function Salary() {
  const[pf,setpf]=useState("");
  const[emp_id,setemp_id]=useState("");
  const[basic,setbasic]=useState("");
- const[da,setda]=useState("");
+ const[DA,setDA]=useState("");
  const[ta,setta]=useState("");
  const[gross_sal,setgross_sal]=useState("");
  const[hra,sethra]=useState("");
@@ -27,7 +30,7 @@ function Salary() {
 
   const fetchUserName = async () => {
     try {
-      const q = query(collection(db, "transactions"), where("uid", "==", user?.uid));
+      const q = query(collection(db, "transactions"), where("empID", "==", user?.uid));
       //const q1 = query(collection(db, "users"), where("uid", "==", user?.uid));
       const doc = await getDocs(q);
       const data = doc.docs[0].data();
@@ -35,7 +38,7 @@ function Salary() {
       setpf(data.pf);  
       setemp_id(data.emp_id); 
       setbasic(data.basic);
-      setda(data.da);
+      setDA(data.DA);
       setta(data.ta);
       setgross_sal(data.gross_sal);
       sethra(data.hra);
@@ -65,7 +68,7 @@ function Salary() {
        
      <div> Employee ID:       {emp_id}</div>
      <div>Basic pay:           {basic}</div>
-     <div>DA: {da} </div>
+     <div>DA: {DA} </div>
      <div>HRA: {hra}</div>
      <div>TA: {ta} </div>
      <div> PF:              {pf}</div>
@@ -74,6 +77,7 @@ function Salary() {
      <div>Net salary: {net_sal}</div>
 
        <br></br> 
+       <Button variant="contained"  onClick={() =>navigate('/Pdf')}>Generate Salary Slip</Button> 
 
         <button className="dashboard__btn" onClick={logout}>
           Logout

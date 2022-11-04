@@ -1,14 +1,15 @@
 
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { auth, logInWithEmailAndPassword, signInWithGoogle } from "./../firebase";
+import { auth } from "../firebase";
+import {logInWithEmailAndPassword, signInWithGoogle} from "./AccountantAuth";
 import { useAuthState } from "react-firebase-hooks/auth";
 import "./Login.css";
 
-function Adlogin() {
+function Aclogin() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [admin, loading, error] = useAuthState(auth);
+  const [user, loading, error] = useAuthState(auth);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -16,12 +17,8 @@ function Adlogin() {
       // maybe trigger a loading screen
       return;
     }
-   
-
-    if (admin) navigate("/Addashboard");
-  }, [admin, loading]);
-
-
+    if (user) navigate("/Accountantdashboard");
+  }, [user, loading]);
 
   return (
     <div className="login">
@@ -50,14 +47,14 @@ function Adlogin() {
           Login with Google
         </button>
         <div>
-          <Link to="/reset">Forgot Password</Link>
+          <Link to="/Accountantreset">Forgot Password</Link>
         </div>
         <div>
-          Don't have an account? <Link to="/register">Register</Link> now.
+          Don't have an account? <Link to="/Accountantregister">Register</Link> now.
         </div>
       </div>
     </div>
   );
 }
-
-export default Adlogin;
+export {auth};
+export default Aclogin;

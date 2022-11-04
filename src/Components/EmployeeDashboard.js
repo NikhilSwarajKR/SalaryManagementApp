@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useNavigate } from "react-router-dom";
 import "./Dashboard.css";
-import { auth, db, logout } from "./../firebase";
+import { auth, db} from "../firebase";
+import {logout} from "./EmployeeAuth";
 import { query, collection, getDocs, where } from "firebase/firestore";
 import "./Salary";
 import {Routes, Route ,Link} from "react-router-dom";
@@ -30,18 +31,22 @@ function Dashboard() {
 
   const fetchUserName = async () => {
     try {
-      const q = query(collection(db, "employees"), where("uid", "==", user?.uid));
+      const empdata = query(collection(db, "employees"), where("uid", "==", user?.uid));
       //const q1 = query(collection(db, "users"), where("uid", "==", user?.uid));
-      const doc = await getDocs(q);
+      const doc = await getDocs(empdata);
       const data = doc.docs[0].data();
-
+      console.log(data);
       setName(data.name.first + " "+ data.name.last);
       setqualification(data.qualification);
-      //setdesignation(data.designation);
-      setdepartment(data.department);   
-      //setyoep(data.yoep);
       setdoj(data.doj.toDate().toDateString())
       
+      //setdesignation(data.designation);
+      const deptdata=query(collection(db, "departments"), where("id", "==", data.department));
+      const dept = await getDocs(deptdata);
+      const dep= dept.docs[0].data().dept_name;
+      setdepartment(data.dep);   
+      //setyoep(data.yoep);
+    
     } catch (err) {
       console.error(err);
       //alert("An error occured while fetching user data");
@@ -63,14 +68,14 @@ function Dashboard() {
         <div>Email: {user?.email}</div>
         <div> Qualification: {qualification}</div>
         
-        <div>Department Code: {department}</div>
+        <div>Department : {department}</div>
         
         <div>DOJ: {doj}</div>
 
      
-        <br>
         
-        </br><br></br> <Button variant="contained"  onClick={() =>navigate('/Fileupload')}>Upload image</Button> 
+        
+        
         
         <br></br> <Button variant="contained"  onClick={() =>navigate('/Upload')}>Upload file</Button> 
         <br>

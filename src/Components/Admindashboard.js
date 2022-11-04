@@ -2,30 +2,30 @@ import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useNavigate } from "react-router-dom";
 import "./Dashboard.css";
-import { auth, db, logout } from "./../firebase";
+import { auth, db} from "../firebase";
 import { query, collection, getDocs, where } from "firebase/firestore";
 import {Routes, Route ,Link} from "react-router-dom";
 import Button from '@mui/material/Button'; 
 
+import {logout} from "./AdminAuth";
 
 
-
-function Acdashboard() {
-  const [user, loading, error] = useAuthState(auth);
-  const [name, setName] = useState("");
- const[qualification,setqualification]=useState("");
+function Addashboard() {
+  const [admin, loading, error] = useAuthState(auth);
+  
+ 
 
   const navigate = useNavigate();
 
   const fetchUserName = async () => {
     try {
-      const q = query(collection(db, "accountant"), where("uid", "==", user?.uid));
+      const q = query(collection(db, "admin"), where("uid", "==", "admin?.uid"));
       //const q1 = query(collection(db, "users"), where("uid", "==", user?.uid));
       const doc = await getDocs(q);
       const data = doc.docs[0].data();
 
-      setName(data.name.first + " "+ data.name.last);
-      setqualification(data.qualification);
+      
+    
       
       
     } catch (err) {
@@ -36,23 +36,22 @@ function Acdashboard() {
 
   useEffect(() => {
     if (loading) return;
-    if (!user) return navigate("/");
+    if (!admin) return navigate("/");
     
     fetchUserName();
-  }, [user, loading]);
+  }, [admin, loading]);
 
   return (
     <div className="dashboard">
       <div className="dashboard__container">
-       <u> Accontant Profile details</u> <br></br>
-       <div>Name: {name}</div>
-        <div>Email: {user?.email}</div>
-        <div> Qualification: {qualification}</div>
+       <u> Admin Page</u> <br></br>
+    
+    
         
         <br>
         
         </br>
-        <Button variant="contained"  onClick={() =>navigate('/salcal')}>proceed </Button> 
+        <Button variant="contained"  onClick={() =>navigate('/addemp')}>Add new Employee</Button> 
 
        
 <br>
@@ -68,4 +67,4 @@ function Acdashboard() {
   );
 }
 
-export default Acdashboard;
+export default Addashboard;

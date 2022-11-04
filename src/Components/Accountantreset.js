@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
-import { auth, sendPasswordReset } from "./../firebase";
+import { auth } from "./../firebase";
+import {sendPasswordReset} from "./AccountantAuth";
 import "./Reset.css";
 
 function Reset() {
@@ -12,7 +13,7 @@ function Reset() {
 
   useEffect(() => {
     if (loading) return;
-    if (user) navigate("/dashboard");
+    if (user) navigate("/Accountantdashboard");
   }, [user, loading]);
 
   return (
@@ -30,7 +31,7 @@ function Reset() {
         </button>
 
         <div>
-          Don't have an account? <Link to="/register">Register</Link> now.
+          Don't have an account? <Link to="/Accountantregister">Register</Link> now.
         </div>
       </div>
     </div>

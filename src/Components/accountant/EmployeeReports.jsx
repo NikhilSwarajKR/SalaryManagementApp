@@ -21,14 +21,7 @@ function EmployeeReports() {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
- 
- 
-  const openViews=()=>{
-      window.open('<ViewReport/>');
-  }
-  
   const fetchReports=async()=>{
-
     const empTransRef =query(collection(db,'transactions'),where('empID','==',empData.empID));
     const TransSnap = await getDocs(empTransRef);
     let transactionsStore=[];
@@ -78,6 +71,19 @@ function EmployeeReports() {
     handleClose();
     window.location.reload();
   }
+  
+  const openViews=(transID)=>{
+    let temp=[];
+    transactionsData.forEach((trans)=>{
+      if(trans.transID===transID){
+        temp=trans;
+      }
+    });
+    console.log(temp);
+    localStorage.setItem("refTransData", JSON.stringify(temp));
+    window.open('/ViewReport');
+  }
+
   const style = {
     position: 'absolute',
     top: '50%',
@@ -112,7 +118,7 @@ function EmployeeReports() {
       sortable: true,
     },
     {
-      cell: row => <Button variant="contained" onClick={openViews}>View</Button>,
+      cell: row => <Button variant="contained" onClick={()=>openViews(row.transID)}>View</Button>,
       allowOverflow: true,
       button: true,
     },

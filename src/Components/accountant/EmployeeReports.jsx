@@ -33,23 +33,25 @@ function EmployeeReports() {
         empName:trans.data().empName,
         deptName:trans.data().deptName,
         designation:trans.data().designation,
+        dateOfJoining:trans.data().dateOfJoining,
         fromDate:trans.data().fromDate,
         toDate:trans.data().toDate,
         transactionDate:trans.data().transactionDate,
         basicPay:trans.data().basicPay,
         HRA:trans.data().HRA,
         DA:trans.data().DA,
-        GradePay:trans.data().GradePay,
+        gradePay:trans.data().gradePay,
         TA:trans.data().TA,
+        noOfDays:trans.data().noOfDays,
         totalWorkingDays:trans.data().totalWorkingDays,
+        unpaidLeavesTaken:trans.data().unpaidLeavesTaken, 
         PT:trans.data().PT,
-        leaves:trans.data().leaves,
         lossOfPay:trans.data().lossOfPay,
         PF:trans.data().PF,
         PFEC:trans.data().PFEC,
-        grossSal:trans.data().grossSal,
+        grossSalary:trans.data().grossSalary,
         totalDeduction:trans.data().totalDeduction,
-        netSal:trans.data().netSal
+        netSalary:trans.data().netSalary
       });
     });
     setLoading(true);
@@ -93,8 +95,6 @@ function EmployeeReports() {
     bgcolor: 'background.paper',
     border: '2px solid #000',
     boxShadow: 24,
-    alignItems:'center',
-    p: 4,
   };
   const cols=[
     {
@@ -137,8 +137,8 @@ function EmployeeReports() {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            <Alert severity="error">Deleting Transaction: Confirm &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<Button variant="contained" color="error" onClick={handleDelete}>Delete</Button></Alert>
+          <Typography id="modal-modal-description" sx={{ m: 2 }}>
+            <Alert severity="error">Confirming Delete Transaction &nbsp;&nbsp;<Button variant="contained" color="error" onClick={handleDelete}>Delete</Button></Alert>
           </Typography>
           
         </Box>

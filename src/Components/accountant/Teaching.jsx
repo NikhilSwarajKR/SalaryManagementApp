@@ -3,10 +3,12 @@ import {db,storage} from '../../firebase';
 import {collection, query,where, getDocs} from 'firebase/firestore';
 import DataTable from 'react-data-table-component';
 import './styles/Common.css';
-import BreadCrumbs from './BreadCrumbs';
 import Button from '@mui/material/Button';
 import {useNavigate} from 'react-router-dom';
-import Box from '@mui/material/Box';;
+import Box from '@mui/material/Box';
+import Breadcrumbs from '@mui/material/Breadcrumbs';
+import NavigateNextIcon from '@mui/icons-material/NavigateNext';
+import Link from '@mui/material/Link';
 
 export default function Teaching() {
   const navigate = useNavigate();
@@ -124,13 +126,18 @@ export default function Teaching() {
     }];
     
     return(
+      <div className='rendering'>
+    <Breadcrumbs separator={<NavigateNextIcon fontSize="small" />}aria-label="breadcrumb">
+        <Link underline="hover" key="1" color="inherit" href="/" >Home</Link>
+        <Link underline="hover" key="2" color="inherit" href="/Teaching" >Teaching</Link>
+    </Breadcrumbs>
       <div className='Teaching rendering'>
-          <BreadCrumbs component='TEACHING'/>
           {loading ?(
             <DataTable columns={cols} data={data} title="Teaching Staffs" pagination responsive fixedHeader fixedHeaderScrollHeight="400px"/>
           ):(
             <h1>Loading</h1>
           )}
+      </div>
       </div>
     );
  

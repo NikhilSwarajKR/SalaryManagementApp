@@ -14,16 +14,15 @@ import MenuItem from '@mui/material/MenuItem';
 import CurrencyRupeeIcon from '@mui/icons-material/CurrencyRupee';
 import { useNavigate } from 'react-router-dom';
 import {Route, Routes} from "react-router-dom";
-import Teaching from './Teaching';
-import NonTeaching from './NonTeaching';
-import EmployeeDetails from './EmployeeDetails';
-import GenerateSalarySlip from './GenerateSalarySlip';
-import EmployeeReports from './EmployeeReports';
-import AllReports from './AllReports';
-import ViewReport from './ViewReport';
+import Departments from './Departments';
+import Employees from './Employees'
+import PayScales from './PayScales';
+import EditDepartment from './EditDepartment';
+import CreateDepartment from './CreateDepartment';
+import CreatePayScale from './CreatePayScale';
+import EditPayScale from './EditPayScale';
 
-
-const AccountantHeader = () => {
+const AdminHeader = () => {
   const navigate = useNavigate();
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
@@ -128,9 +127,9 @@ const AccountantHeader = () => {
              SALAIRE
             </Typography>
             <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-              <Button sx={{ my: 2, color: 'white', display: 'block' }} onClick={() => navigate('/Teaching')}>Teaching</Button>
-              <Button sx={{ my: 2, color: 'white', display: 'block' }} onClick={() => navigate('/NonTeaching')}>Non Teaching</Button>
-              <Button sx={{ my: 2, color: 'white', display: 'block' }} onClick={() => navigate('/Reports')}>Reports</Button>
+              <Button sx={{ my: 2, color: 'white', display: 'block' }} onClick={() => navigate('/Departments')}>Departments</Button>
+              <Button sx={{ my: 2, color: 'white', display: 'block' }} onClick={() => navigate('/Employees')}>Employees</Button>
+              <Button sx={{ my: 2, color: 'white', display: 'block' }} onClick={() => navigate('/PayScales')}>Pay Scales</Button>
             </Box>
 
             <Box sx={{ flexGrow: 0 }}>
@@ -170,16 +169,16 @@ const AccountantHeader = () => {
         </Container>
       </AppBar>
       <Routes>
-        <Route exact path='/Teaching' element={<Teaching/>}/>
-        <Route exact path='/NonTeaching' element={<NonTeaching/>}/>
-        <Route exact path='/EmployeeDetails' element={<EmployeeDetails/>}>
-            <Route exact path='GenerateSalarySlip' element={<GenerateSalarySlip/>}></Route>
-            <Route exact path='EmployeeReports' element={<EmployeeReports/>}></Route>
-        </Route>
-        <Route exact path='Reports' element={<AllReports/>}></Route>
-        <Route exact path='ViewReport' element={<ViewReport/>}></Route>
+        <Route exact path='/Departments' element={<Departments/>}/>
+        <Route exact path='/Employees' element={<Employees/>}/>
+        <Route exact path='/PayScales' element={<PayScales/>}/>
+        <Route exact path='/EditDepartment' element={<EditDepartment/>}/>
+        <Route exact path='/CreateDepartment' element={<CreateDepartment/>}></Route>
+        <Route exact path='/CreatePayScale' element={<CreatePayScale/>}></Route>
+        <Route exact path='/EditPayScale' element={<EditPayScale/>}></Route>
+
       </Routes>
     </div>  
   );
 };
-export default AccountantHeader;
+export default AdminHeader;

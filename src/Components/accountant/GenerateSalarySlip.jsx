@@ -119,7 +119,7 @@ export default function GenerateSalarySlip() {
           empName:empData.firstName+" "+empData.lastName,
           deptName:empData.deptName,
           designation:empData.designation,
-          dateOfJoining:empData.doj,
+          dateOfJoining:new Timestamp(empData.doj.seconds,empData.doj.nanoseconds),
           fromDate: Timestamp.fromDate(new Date(document.getElementById('fromDate').value)),
           toDate: Timestamp.fromDate(new Date(document.getElementById('toDate').value)),
           transactionDate: Timestamp.fromDate(new Date()),

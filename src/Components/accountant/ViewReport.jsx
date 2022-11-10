@@ -57,7 +57,7 @@ return (
                     <Typography variant="subtitle1"><b>Pay Slip Of The Month</b></Typography>
                 </TableCell>
                 <TableCell colSpan={2} align="left" >
-                    <Typography >{month[new Date(transData.fromDate.seconds*1000).getMonth()]} {new Date(transData.dateOfJoining.seconds*1000).getFullYear()}</Typography>
+                    <Typography >{month[new Date(transData.fromDate.seconds*1000).getMonth()]} {new Date(transData.fromDate.seconds*1000).getFullYear()}</Typography>
                 </TableCell>
             </TableRow>
 

@@ -2,19 +2,20 @@ import React,{useState, useEffect} from 'react';
 import {db,storage} from '../../firebase';
 import {collection, query,where, getDocs} from 'firebase/firestore';
 import DataTable from 'react-data-table-component';
-import './styles/Common.css';
-import BreadCrumbs from './BreadCrumbs';
 import Button from '@mui/material/Button';
 import {useNavigate} from 'react-router-dom';
-import Box from '@mui/material/Box';;
+import Box from '@mui/material/Box';
+import Breadcrumbs from '@mui/material/Breadcrumbs';
+import NavigateNextIcon from '@mui/icons-material/NavigateNext';
+import Link from '@mui/material/Link';
 
-export default function Teaching() {
+export default function Employees() {
   const navigate = useNavigate();
   const [data, setData] = useState([]);
   const [loading,setLoading]= useState(false);
-
+  
   const fetchEmployees=async()=>{
-    const deptRef =query(collection(db,'departments'),where('dept_cat','==','dcat1'));
+    const deptRef =query(collection(db,'departments'));
     const bpsRef =query(collection(db,'basicpayscale'));
     const empRef = query(collection(db,'employees'));
     const empSnap = await getDocs(empRef);
@@ -54,6 +55,7 @@ export default function Teaching() {
           qualification: emp.data().qualification,
           doj: emp.data().doj,
           bpsID:emp.data().paygrade,
+          imageID:emp.data().img
       });
     });
     deptStore.forEach((dept) => {
@@ -84,7 +86,7 @@ export default function Teaching() {
       }
     });
     localStorage.setItem('RefEmpData', JSON.stringify(temp));
-    navigate('/EmployeeDetails');
+    navigate('/ManageEmployee');
   }
   const cols=[
     {
@@ -124,13 +126,21 @@ export default function Teaching() {
     }];
     
     return(
-      <div className='Teaching rendering'>
-          <BreadCrumbs component='TEACHING'/>
+      <div className='rendering'>
+    <Breadcrumbs separator={<NavigateNextIcon fontSize="small" />}aria-label="breadcrumb">
+        <Link underline="hover" key="1" color="inherit" href="/" >Home</Link>
+        <Link underline="hover" key="2" color="inherit" href="/Employees" >Employees</Link>
+    </Breadcrumbs>
+     <div>
+            <Button variant="contained" onClick={()=>navigate('/CreateEmployee')}>Create new Employee</Button>
+      </div>
+      <div className='rendering'>
           {loading ?(
-            <DataTable columns={cols} data={data} title="Teaching Staffs" pagination responsive fixedHeader fixedHeaderScrollHeight="400px"/>
+            <DataTable columns={cols} data={data} title="Employees" pagination responsive fixedHeader fixedHeaderScrollHeight="400px"/>
           ):(
             <h1>Loading</h1>
           )}
+      </div>
       </div>
     );
  

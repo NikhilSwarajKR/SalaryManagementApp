@@ -9,12 +9,21 @@ import BottomNavigationAction from '@mui/material/BottomNavigationAction';
 
 import SummarizeIcon from '@mui/icons-material/Summarize';
 import NoteAddIcon from '@mui/icons-material/NoteAdd';
+import Breadcrumbs from '@mui/material/Breadcrumbs';
+import NavigateNextIcon from '@mui/icons-material/NavigateNext';
+import Link from '@mui/material/Link';
 
 
 export default function EmployeeDetails() {
   const navigate = useNavigate();
   const data=JSON.parse(localStorage.getItem('RefEmpData'));
   return (
+    <div className='rendering'>
+    <Breadcrumbs separator={<NavigateNextIcon fontSize="small" />}aria-label="breadcrumb">
+        <Link underline="hover" key="1" color="inherit" href="/" >Home</Link>
+        <Link underline="hover" key="2" color="inherit" >Employees</Link>
+        <Link underline="hover" key="3" color="inherit" href="/EmployeeDetails" >Employee Details</Link>
+    </Breadcrumbs>
     <div className='rendering'>
        
         <Box
@@ -99,6 +108,7 @@ export default function EmployeeDetails() {
       
 
       <Outlet/>
+    </div>
     </div>
   )
 }

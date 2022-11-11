@@ -8,13 +8,13 @@ import "./Reset.css";
 
 function Reset() {
   const [email, setEmail] = useState("");
-  const [admin, loading, error] = useAuthState(auth);
+  const [user, loading, error] = useAuthState(auth);
   const navigate = useNavigate();
 
   useEffect(() => {
     if (loading) return;
-    if (admin) navigate("/Admindashboard");
-  }, [admin, loading]);
+    if (user) navigate("/Admindashboard");
+  }, [user, loading]);
 
   return (
     <div className="reset">

@@ -3,31 +3,50 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { useNavigate } from "react-router-dom";
 import "./Dashboard.css";
 import { auth, db} from "../firebase";
+import {logout} from "./EmployeeAuth";
 import { query, collection, getDocs, where } from "firebase/firestore";
+import "./Salary";
 import {Routes, Route ,Link} from "react-router-dom";
 import Button from '@mui/material/Button'; 
-
-import {logout} from "./AdminAuth";
-
-
-function Addashboard() {
-  const [admin, loading, error] = useAuthState(auth);
+import { styled } from '@mui/material/styles';  
   
- 
+import IconButton from '@mui/material/IconButton';  
+import PhotoCamera from '@mui/icons-material/PhotoCamera';  
+import Stack from '@mui/material/Stack';  
+  
 
+
+
+
+function Dashboard() {
+  const [user, loading, error] = useAuthState(auth);
+  const [name, setName] = useState("");
+ const[qualification,setqualification]=useState("");
+ const[designation,setdesignation]=useState("");
+ const[department,setdepartment]=useState("");
+ //const[yoep,setyoep]=useState("");
+ const[doj,setdoj]=useState("");
+ const Input = styled('input')({ display: 'none', }); 
   const navigate = useNavigate();
 
   const fetchUserName = async () => {
     try {
-      const q = query(collection(db, "admin"), where("uid", "==", "admin?.uid"));
+      const empdata = query(collection(db, "admin"), where("usersDocID", "==", user?.uid));
       //const q1 = query(collection(db, "users"), where("uid", "==", user?.uid));
-      const doc = await getDocs(q);
+      const doc = await getDocs(empdata);
       const data = doc.docs[0].data();
-
+      console.log(data);
+      setName(data.name.first + " "+ data.name.last);
+      setqualification(data.qualification);
+      setdoj(data.doj.toDate().toDateString())
       
+      //setdesignation(data.designation);
+      const deptdata=query(collection(db, "departments"), where("id", "==", data.department));
+      const dept = await getDocs(deptdata);
+      const dep= dept.docs[0].data().dept_name;
+      setdepartment(data.dep);   
+      //setyoep(data.yoep);
     
-      
-      
     } catch (err) {
       console.error(err);
       //alert("An error occured while fetching user data");
@@ -36,16 +55,21 @@ function Addashboard() {
 
   useEffect(() => {
     if (loading) return;
-    if (!admin) return navigate("/");
+    if (!user) return navigate("/");
     
     fetchUserName();
-  }, [admin, loading]);
+  }, [user, loading]);
 
-  return (
+ 
+      
+
+     
+        return (
     <div className="dashboard">
       <div className="dashboard__container">
        <u> Admin Page</u> <br></br>
     
+       <div>Email: {user?.email}</div>
     
         
         <br>
@@ -54,9 +78,17 @@ function Addashboard() {
         <Button variant="contained"  onClick={() =>navigate('/addemp')}>Add new Employee</Button> 
 
        
-<br>
+<br></br>
+        
+        
+        
+     
 
-</br>
+       
+
+
+
+        
         <button className="dashboard__btn" onClick={logout}>
           Logout
         </button>
@@ -67,4 +99,4 @@ function Addashboard() {
   );
 }
 
-export default Addashboard;
+export default Dashboard;

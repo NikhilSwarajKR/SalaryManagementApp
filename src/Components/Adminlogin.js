@@ -9,7 +9,7 @@ import "./Login.css";
 function Adlogin() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [admin, loading, error] = useAuthState(auth);
+  const [user, loading, error] = useAuthState(auth);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -19,10 +19,10 @@ function Adlogin() {
     }
    
 
-    if (admin)
+    if (user)
     navigate("/Admindashboard");
     
-  }, [admin, loading]);
+  }, [user, loading]);
 
 
 

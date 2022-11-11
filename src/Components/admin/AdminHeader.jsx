@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState,useEffect} from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -13,22 +13,12 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import CurrencyRupeeIcon from '@mui/icons-material/CurrencyRupee';
 import { useNavigate } from 'react-router-dom';
-import {Route, Routes} from "react-router-dom";
-import Departments from './Departments';
-import Employees from './Employees'
-import PayScales from './PayScales';
-import EditDepartment from './EditDepartment';
-import CreateDepartment from './CreateDepartment';
-import CreatePayScale from './CreatePayScale';
-import EditPayScale from './EditPayScale';
-import CreateEmployee from './CreateEmployee';
-import ManageEmployee from './ManageEmployee';
 
+import {logout} from "./../AdminAuth";
 const AdminHeader = () => {
   const navigate = useNavigate();
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
-
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
@@ -43,7 +33,23 @@ const AdminHeader = () => {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
-
+  const navigateLogout=()=>{
+    localStorage.clear()
+    logout();
+    navigate('/');
+  }
+  const checkUser=()=>{
+    const adminData=JSON.parse(localStorage.getItem('adminData'))
+    if(adminData){
+      return
+    }
+    else{
+      navigateLogout();
+    }
+  }
+  useEffect(()=>{
+    checkUser()
+  },[])
   return (
     <div className="Header">
       <AppBar position="static">
@@ -54,7 +60,7 @@ const AdminHeader = () => {
               variant="h6"
               noWrap
               component="a"
-              href="/"
+              href="/AdminProfile"
               sx={{
                 mr: 2,
                 display: { xs: 'none', md: 'flex' },
@@ -99,13 +105,13 @@ const AdminHeader = () => {
               >
                 
               <MenuItem>
-                <Typography textAlign="center"onClick={() => navigate('/Teaching')}>Teaching</Typography>
+                <Typography textAlign="center"onClick={() => navigate('Departments')}>Departments</Typography>
               </MenuItem>
               <MenuItem>
-                <Typography textAlign="center"onClick={() => navigate('/NonTeaching')}>Non Teaching</Typography>
+                <Typography textAlign="center"onClick={() => navigate('Employees')}>Employees</Typography>
               </MenuItem>
               <MenuItem>
-                <Typography textAlign="center"onClick={() => navigate('/Reports')}>Reports</Typography>
+                <Typography textAlign="center"onClick={() => navigate('PayScales')}>Pay Scales</Typography>
               </MenuItem>
               </Menu>
             </Box>
@@ -114,7 +120,7 @@ const AdminHeader = () => {
               variant="h5"
               noWrap
               component="a"
-              href=""
+              href="/AdminProfile"
               sx={{
                 mr: 2,
                 display: { xs: 'flex', md: 'none' },
@@ -157,32 +163,16 @@ const AdminHeader = () => {
                 onClose={handleCloseUserMenu}
               >
               <MenuItem>
-                <Typography textAlign="center"onClick={() => navigate('/')}>Profile</Typography>
+                <Typography textAlign="center"onClick={() => navigate('/AdminProfile')}>Change Passsword</Typography>
               </MenuItem>
               <MenuItem>
-                <Typography textAlign="center"onClick={() => navigate('/')}>Change Password</Typography>
-              </MenuItem>
-              <MenuItem>
-                <Typography textAlign="center"onClick={() => navigate('/')}>Logout</Typography>
+                <Typography textAlign="center"onClick={navigateLogout}>Logout</Typography>
               </MenuItem>
               </Menu>
             </Box>
           </Toolbar>
         </Container>
       </AppBar>
-      <Routes>
-        <Route exact path='/Departments' element={<Departments/>}/>
-        <Route exact path='/EditDepartment' element={<EditDepartment/>}/>
-        <Route exact path='/CreateDepartment' element={<CreateDepartment/>}></Route>
-        
-        <Route exact path='/Employees' element={<Employees/>}/>
-        <Route exact path='/CreateEmployee' element={<CreateEmployee/>}></Route>
-        <Route exact path='/ManageEmployee' element={<ManageEmployee/>}></Route>
-        <Route exact path='/PayScales' element={<PayScales/>}/>     
-        <Route exact path='/CreatePayScale' element={<CreatePayScale/>}></Route>
-        <Route exact path='/EditPayScale' element={<EditPayScale/>}></Route>
-
-      </Routes>
     </div>  
   );
 };

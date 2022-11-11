@@ -1,52 +1,66 @@
-import "./App.css";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import EmployeeLogin from "./Components/EmployeeLogin";
-import Accountantlogin from "./Components/Accountantlogin";
-import Adminlogin from "./Components/Adminlogin";
-import EmployeeRegister from "./Components/EmployeeRegister";
-import Adminregister from "./Components/Adminregister";
-import Accountantregister from "./Components/Accountantregister";
-import EmployeeReset from "./Components/EmployeeReset";
-import Adminreset from "./Components/Adminreset";
-import Accountantreset from "./Components/Accountantreset";
-import EmployeeDashboard from "./Components/EmployeeDashboard";
-import Admindashboard from "./Components/Admindashboard";
-import Accountantdashboard from "./Components/Accountantdashboard";
-import Salary from "./Components/Salary";
+import {Routes,Route} from 'react-router-dom';
 import Welcome from "./Components/Welcome";
-import Upload from "./Components/Upload";
-import Pdf from "./Components/Pdf";
-import Head from "./Components/Head";
-import GenerateSalarySlip from "./Components/GenerateSalarySlip";
+import AdminLogin from './Components/AdminLogin';
+import AccountantLogin from './Components/AccountantLogin';
+import EmployeeLogin from './Components/EmployeeLogin';
+import AccountantHeader from './Components/accountant/AccountantHeader'
+import Departments from './Components/admin/Departments';
+import Employees from './Components/admin//Employees'
+import PayScales from './Components/admin//PayScales';
+import EditDepartment from './Components/admin//EditDepartment';
+import CreateDepartment from './Components/admin//CreateDepartment';
+import CreatePayScale from './Components/admin//CreatePayScale';
+import EditPayScale from './Components/admin//EditPayScale';
+import CreateEmployee from './Components/admin//CreateEmployee';
+import ManageEmployee from './Components/admin//ManageEmployee';
+import AdminProfile from './Components/admin//AdminProfile';
+import AdminReset from './Components/AdminReset';
+import AccountantReset from './Components/AccountantReset';
+import EmployeeReset from './Components/EmployeeReset';
+import AccountantProfile from './Components/accountant/AccountantProfile';
+import Teaching from './Components/accountant/Teaching';
+import NonTeaching from './Components/accountant/NonTeaching';
+import EmployeeDetails from './Components/accountant/EmployeeDetails';
+import GenerateSalarySlip from './Components/accountant/GenerateSalarySlip';
+import EmployeeReports from './Components/accountant/EmployeeReports';
+import AllReports from './Components/accountant/AllReports';
+import ViewReport from './Components/accountant/ViewReport';
 
 function App() {
   return (
     <div className="app">
-      <Router>
-        <Routes>
-        <Route exact path="/" element={<Welcome />} />
-        <Route exact path="/accountantlogin" element={<Accountantlogin />} />
-        <Route exact path="/adminlogin" element={<Adminlogin />} />
-          <Route exact path="/EmployeeLogin" element={<EmployeeLogin />} />
-          <Route exact path="/EmployeeRegister" element={<EmployeeRegister />} />
-          <Route exact path="/Adminregister" element={<Adminregister />} />
-          <Route exact path="/Accountantregister" element={<Accountantregister />} />
-          <Route exact path="/EmployeeReset" element={<EmployeeReset />} />
-          <Route exact path="/Accountantreset" element={<Accountantreset />} />
-          <Route exact path="/Adminreset" element={<Adminreset />} />
-          <Route exact path="/Head" element={<Head />} />
-          <Route exact path="/EmployeeDashboard" element={<EmployeeDashboard />} />
-          <Route exact path="/admindashboard" element={<Admindashboard />} />
-          <Route exact path="/accountantdashboard" element={<Accountantdashboard />} />
-          <Route exact path="/Salary" element={<Salary />} />
-          <Route exact path="/Upload" element={<Upload />} />
-          <Route exact path="/Pdf" element={<Pdf />} />
-          <Route exact path="/GenerateSalarySlip" element={<GenerateSalarySlip />} />
-         
+      <Routes>
+          <Route exact path="/" element={<Welcome/>}/>
+
+          <Route exact path="/AdminLogin" element={<AdminLogin />} />
+          <Route exact path="/AdminReset" element={<AdminReset/>} />
+          <Route exact path='/AdminProfile'element={<AdminProfile/>}/>
+          <Route exact path='/Departments' element={<Departments/>}/>
+          <Route exact path='/EditDepartment' element={<EditDepartment/>}/>
+          <Route exact path='/CreateDepartment' element={<CreateDepartment/>}></Route>
+          <Route exact path='/Employees' element={<Employees/>}/>
+          <Route exact path='/CreateEmployee' element={<CreateEmployee/>}></Route>
+          <Route exact path='/ManageEmployee' element={<ManageEmployee/>}></Route>
+          <Route exact path='/PayScales' element={<PayScales/>}/>     
+          <Route exact path='/CreatePayScale' element={<CreatePayScale/>}></Route>
+          <Route exact path='/EditPayScale' element={<EditPayScale/>}></Route>
+
+          <Route exact path="/AccountantLogin" element={<AccountantLogin />} />
+          <Route exact path="/AccountantReset" element={<AccountantReset/>} />
+          <Route exact path='/AccountantProfile'element={<AccountantProfile/>}/>
+          <Route exact path='/Teaching' element={<Teaching/>}/>
+          <Route exact path='/NonTeaching' element={<NonTeaching/>}/>
+          <Route exact path='/EmployeeDetails' element={<EmployeeDetails/>}>
+              <Route exact path='GenerateSalarySlip' element={<GenerateSalarySlip/>}></Route>
+              <Route exact path='EmployeeReports' element={<EmployeeReports/>}></Route>
+          </Route>
+          <Route exact path='Reports' element={<AllReports/>}></Route>
+          <Route exact path='ViewReport' element={<ViewReport/>}></Route>
           
-        </Routes>
-      </Router>
-      
+          <Route exact path="/EmployeeLogin" element={<EmployeeLogin />} />
+          <Route exact path="/EmployeeReset" element={<EmployeeReset/>} />
+
+      </Routes>
     </div>
   );
 }

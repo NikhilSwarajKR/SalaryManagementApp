@@ -10,29 +10,26 @@
   display: flex;
   flex-direction: column;
   text-align: center;
-  background-color: #dcdcdc;
+  background-color: white;
   padding: 30px;
 }
 
 .login__textBox {
   padding: 10px;
+  width: 100%;
   font-size: 18px;
   margin-bottom: 10px;
+  border-radius: 2px;
 }
 
-.login__btn {
-  padding: 10px;
-  font-size: 18px;
-  margin-bottom: 10px;
-  border: none;
-  color: black;
-  background-color: turquoise;
-}
-
-.login__google {
-  background-color: teal;
+.root{
+  height: 100%;
+  width: 100%;
+  background-size: cover;
+  
+  background-image: url(./image_sources/payroll_image.jpg);
 }
 
 .login div {
-  margin-top: 7px;
+  margin-top: 0px;
 }

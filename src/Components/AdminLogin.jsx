@@ -1,34 +1,33 @@
-
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import {Link, useNavigate } from "react-router-dom";
 import { auth} from "../firebase";
 import {logout,logInWithEmailAndPassword, signInWithGoogle} from "./AdminAuth";
 import { useAuthState } from "react-firebase-hooks/auth";
+import NavBar from "./NavBar";
 import "./Login.css";
-
-function Adlogin() {
+import Button from '@mui/material/Button'; 
+import Stack from '@mui/material/Stack';  
+import Container from '@mui/material/Container';
+function AdminLogin() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [user, loading, error] = useAuthState(auth);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (loading) {
-      // maybe trigger a loading screen
-      return;
-    }
-   
-
-    if (user)
-    navigate("/Admindashboard");
-    
-  }, [user, loading]);
-
-
+  
 
   return (
+    <div>
+      <NavBar/>
+    <div className="root">
+      
+   
+<Container maxWidth="x1">
     <div className="login">
-      <div className="login__container">
+    < div className="login__container">
+    
+    <h3> Admin login </h3>
+   
         <input
           type="text"
           className="login__textBox"
@@ -43,24 +42,22 @@ function Adlogin() {
           onChange={(e) => setPassword(e.target.value)}
           placeholder="Password"
         />
-        <button
-          className="login__btn"
-          onClick={() => logInWithEmailAndPassword(email, password)}
-        >
-          Login
-        </button>
-        <button className="login__btn login__google" onClick={signInWithGoogle}>
-          Login with Google
-        </button>
+            
+    <Stack spacing={3} direction="column">  
+         <Button variant="contained" size="medium" onClick={() =>logInWithEmailAndPassword(email, password)}
+        > <b>Login </b></Button> 
+         <Button variant="contained" size="medium" onClick={signInWithGoogle}> <b> Login with google </b></Button> 
+         </Stack> 
         <div>
-          <Link to="/Adminreset">Forgot Password</Link>
+          <Link to="/Adminreset"> <b>Forgot Password ? </b></Link>
         </div>
-        <div>
-          Don't have an account? <Link to="/Adminregister">Register</Link> now.
-        </div>
-      </div>
+  </div>
+    </div>
+    </Container>
+    </div>
+    
     </div>
   );
 }
 
-export default Adlogin;
+export default AdminLogin;

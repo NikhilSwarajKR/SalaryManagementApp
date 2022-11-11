@@ -1,0 +1,19 @@
+.App {
+  padding: 15em 20em 5em;
+  background: url("./image_sources/Logo.png") no-repeat;
+  background-position: 3em 9em;
+  min-height: 100vh;
+  font-family: "Lato", sans-serif;
+}
+
+
+.Film {
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  left: 0;
+  top: 0;
+  background-color: rgba(40, 40, 40, 0.5);
+  z-index: 2;
+  display: none;
+}

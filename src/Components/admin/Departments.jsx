@@ -11,6 +11,8 @@ import Alert from '@mui/material/Alert';
 import Breadcrumbs from '@mui/material/Breadcrumbs';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import Link from '@mui/material/Link';
+import AdminHeader from './AdminHeader';
+
 
 function Departments() {
   const navigate = useNavigate();
@@ -123,9 +125,11 @@ function Departments() {
     }];
     
   return (
-    <div className='rendering'>
+    <div>
+      <AdminHeader/>
+      <div className='rendering'>
     <Breadcrumbs separator={<NavigateNextIcon fontSize="small" />}aria-label="breadcrumb">
-        <Link underline="hover" key="1" color="inherit" href="/" >Home</Link>
+        <Link underline="hover" key="1" color="inherit" href="/AdminProfile" >Home</Link>
         <Link underline="hover" key="2" color="inherit" href="/Departments" >Departments</Link>
     </Breadcrumbs>
     <div className='rendering'>
@@ -147,13 +151,14 @@ function Departments() {
       </div>
       <div>
       {loading ?(
-          <DataTable columns={cols} data={data} title="Departments List" pagination responsive fixedHeader fixedHeaderScrollHeight="500px"/>
+          <DataTable columns={cols} data={data} title="Departments List" pagination responsive fixedHeader/>
         ):(
           <h1>Loading</h1>
         )
       }
       </div>
     
+    </div>
     </div>
     </div>
   )

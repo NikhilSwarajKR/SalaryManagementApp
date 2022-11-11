@@ -1,28 +1,34 @@
-
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { auth } from "../firebase";
 import {logInWithEmailAndPassword, signInWithGoogle} from "./AccountantAuth";
 import { useAuthState } from "react-firebase-hooks/auth";
 import "./Login.css";
-
-function Aclogin() {
+import NavBar from "./NavBar";
+import Button from '@mui/material/Button'; 
+import Stack from '@mui/material/Stack';  
+import Container from '@mui/material/Container';
+function AccountantLogin() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [user, loading, error] = useAuthState(auth);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (loading) {
-      // maybe trigger a loading screen
-      return;
-    }
-    if (user) navigate("/Accountantdashboard");
-  }, [user, loading]);
+  
 
   return (
+    <div>
+      <NavBar/>
+       <div className="root">
+
+   
+<Container maxWidth="x1">
     <div className="login">
-      <div className="login__container">
+    < div className="login__container">
+    
+    <h3> Accountant login </h3>
+   
+  
         <input
           type="text"
           className="login__textBox"
@@ -37,24 +43,25 @@ function Aclogin() {
           onChange={(e) => setPassword(e.target.value)}
           placeholder="Password"
         />
-        <button
-          className="login__btn"
-          onClick={() => logInWithEmailAndPassword(email, password)}
-        >
-          Login
-        </button>
-        <button className="login__btn login__google" onClick={signInWithGoogle}>
-          Login with Google
-        </button>
+         <Stack spacing={3} direction="column">  
+         <Button variant="contained" size="medium" onClick={() =>logInWithEmailAndPassword(email, password)}
+        > <b>Login </b></Button> 
+         <Button variant="contained" size="medium" onClick={signInWithGoogle}> <b> Login with google </b></Button> 
+         </Stack> 
         <div>
-          <Link to="/Accountantreset">Forgot Password</Link>
+          <Link to="/AccountantReset"> <b>Forgot Password ? </b></Link>
         </div>
-        <div>
-          Don't have an account? <Link to="/Accountantregister">Register</Link> now.
-        </div>
-      </div>
+      
+        
+      
+    
+  
+  </div>
+    </div>
+    </Container>
+    </div>
     </div>
   );
 }
 export {auth};
-export default Aclogin;
+export default AccountantLogin;

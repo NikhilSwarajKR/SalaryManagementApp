@@ -14,6 +14,7 @@ import { db ,storage} from "../../firebase";
 import {collection, doc, setDoc, deleteDoc, query, Timestamp, getDocs} from "firebase/firestore";
 import {ref,getDownloadURL,uploadBytes,deleteObject} from "firebase/storage";
 import { v4 } from "uuid";
+import AdminHeader from './AdminHeader';
 
 
 function ManageEmployee() {
@@ -114,6 +115,7 @@ function ManageEmployee() {
             pre_yoe: {months:months,years:years},
             paygrade: paygrade,
             doj: Timestamp.fromDate(DOJ),
+            usersDocID:RefEmpData.usersDocID,
           });
         } catch (err) {
           alert(err);
@@ -143,9 +145,11 @@ function ManageEmployee() {
         boxShadow: 24,
       };
     return (
-      <div className='rendering'>
+     <div>
+      <AdminHeader/>
+       <div className='rendering'>
       <Breadcrumbs separator={<NavigateNextIcon fontSize="small" />}aria-label="breadcrumb">
-          <Link underline="hover" key="1" color="inherit" href="/" >Home</Link>
+          <Link underline="hover" key="1" color="inherit"href="/AdminProfile" >Home</Link>
           <Link underline="hover" key="2" color="inherit" href="/Employees">Employees</Link>
           <Link underline="hover" key="3" color="inherit" href="/ManageEmployee" >Manage Employee</Link>
       </Breadcrumbs>
@@ -228,17 +232,20 @@ function ManageEmployee() {
             <span className="input-group-text" >Change Image &nbsp;&nbsp;&nbsp;&nbsp;</span>
             <input type="file" accept="image/png, image/jpeg" className="form-control" onChange={(event) => {setImageUpload(event.target.files[0]);}} />
           </div>
-          <Button type='submit' variant='contained'>  <EditIcon style={{ color: "white" }}/>&nbsp;&nbsp;&nbsp;&nbsp;Edit&nbsp;&nbsp;</Button>
+          
+          <Button type='submit' variant='contained' className="rounded mx-auto d-block">  <EditIcon style={{ color: "white" }}/>&nbsp;&nbsp;&nbsp;&nbsp;Edit&nbsp;&nbsp;</Button>
+        
                 
         </form>
         <br />
-        <Button variant='contained' color='error' onClick={()=>handleDeleteModal()}><DeleteForeverIcon style={{ color: "white" }}/>&nbsp;Delete</Button>
+        <Button variant='contained' className="rounded mx-auto d-block" color='error' onClick={()=>handleDeleteModal()}><DeleteForeverIcon style={{ color: "white" }}/>&nbsp;Delete</Button>
         </div>
         ) : (
             <h1>Loading</h1>
         )}
         </div>
       </div>
+     </div>
     )
 }
 

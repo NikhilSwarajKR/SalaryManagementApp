@@ -10,6 +10,7 @@ import {
     doc,
     setDoc
   } from "firebase/firestore";
+import AdminHeader from './AdminHeader';
 
 function CreatePayScale() {
     const navigate = useNavigate();
@@ -46,9 +47,11 @@ function CreatePayScale() {
 }
 
   return (
-    <div className='rendering'>
+    <div>
+        <AdminHeader/>
+        <div className='rendering'>
     <Breadcrumbs separator={<NavigateNextIcon fontSize="small" />}aria-label="breadcrumb">
-        <Link underline="hover" key="1" color="inherit" href="/" >Home</Link>
+        <Link underline="hover" key="1" color="inherit" href="/AdminProfile">Home</Link>
         <Link underline="hover" key="2" color="inherit" href="/PayScales" >Pay Scales</Link>
         <Link underline="hover" key="3" color="inherit" href="/CreatePayScale" >Create Pay Scale</Link>
     </Breadcrumbs>
@@ -93,9 +96,10 @@ function CreatePayScale() {
                 <span className="input-group-text" >Travel Allowance &nbsp;&nbsp;&nbsp;&nbsp;</span>
                 <input type="number" className="form-control" required  id="ta"  />
             </div>
-            <Button type="submit" variant="contained" onClick={handleSubmit}>Submit</Button>
+            <Button type="submit" variant="contained" onClick={handleSubmit}>Create</Button>
         </form>
       
+    </div>
     </div>
     </div>
   )

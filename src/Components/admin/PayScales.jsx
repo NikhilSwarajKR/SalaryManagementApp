@@ -11,6 +11,7 @@ import Alert from '@mui/material/Alert';
 import Breadcrumbs from '@mui/material/Breadcrumbs';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import Link from '@mui/material/Link';
+import AdminHeader from './AdminHeader';
 
 function PayScales() {
   const navigate = useNavigate();
@@ -135,9 +136,11 @@ function PayScales() {
     }];
     
   return (
-    <div className='rendering'>
+   <div>
+    <AdminHeader/>
+     <div className='rendering'>
     <Breadcrumbs separator={<NavigateNextIcon fontSize="small" />}aria-label="breadcrumb">
-        <Link underline="hover" key="1" color="inherit" href="/" >Home</Link>
+        <Link underline="hover" key="1" color="inherit" href="/AdminProfile">Home</Link>
         <Link underline="hover" key="2" color="inherit" href="/PayScales" >Pay Scales</Link>
 
     </Breadcrumbs>
@@ -160,7 +163,7 @@ function PayScales() {
       </div>
       <div>
       {loading ?(
-          <DataTable columns={cols} data={data} title="Pay Scale List" pagination responsive fixedHeader fixedHeaderScrollHeight="500px"/>
+          <DataTable columns={cols} data={data} title="Pay Scale List" pagination responsive fixedHeader/>
         ):(
           <h1>Loading</h1>
         )
@@ -169,6 +172,7 @@ function PayScales() {
     
     </div>
     </div>
+   </div>
   )
 }
 

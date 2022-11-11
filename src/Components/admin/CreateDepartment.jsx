@@ -6,6 +6,7 @@ import {useNavigate} from 'react-router-dom';
 import Breadcrumbs from '@mui/material/Breadcrumbs';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import Link from '@mui/material/Link';
+import AdminHeader from './AdminHeader';
 
 function CreateDepartment() {
   const navigate = useNavigate();
@@ -50,9 +51,11 @@ function CreateDepartment() {
         navigate('/Departments');
     }
   return (
-    <div className='rendering'>
+    <div>
+      <AdminHeader/>
+      <div className='rendering'>
     <Breadcrumbs separator={<NavigateNextIcon fontSize="small" />}aria-label="breadcrumb">
-        <Link underline="hover" key="1" color="inherit" href="/" >Home</Link>
+        <Link underline="hover" key="1" color="inherit" href="/AdminProfile" >Home</Link>
         <Link underline="hover" key="2" color="inherit" href="/Departments" >Departments</Link>
         <Link underline="hover" key="3" color="inherit" href="/CreateDepartment" >Create Department</Link>
     </Breadcrumbs>
@@ -91,6 +94,7 @@ function CreateDepartment() {
       )}
       </div>
          
+    </div>
     </div>
   )
 }

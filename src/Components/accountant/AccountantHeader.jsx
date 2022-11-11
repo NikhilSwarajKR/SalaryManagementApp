@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState,useEffect} from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -21,7 +21,7 @@ import GenerateSalarySlip from './GenerateSalarySlip';
 import EmployeeReports from './EmployeeReports';
 import AllReports from './AllReports';
 import ViewReport from './ViewReport';
-
+import {logout} from "./../AccountantAuth";
 
 const AccountantHeader = () => {
   const navigate = useNavigate();
@@ -42,7 +42,23 @@ const AccountantHeader = () => {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
-
+  const navigateLogout=()=>{
+    localStorage.clear()
+    logout();
+    navigate('/');
+  }
+  const checkUser=()=>{
+    const accountantData=JSON.parse(localStorage.getItem('accountantData'))
+    if(accountantData){
+      return
+    }
+    else{
+      navigateLogout();
+    }
+  }
+  useEffect(()=>{
+    checkUser()
+  },[])
   return (
     <div className="Header">
       <AppBar position="static">

@@ -32,3 +32,10 @@
 .reset div {
   margin-top: 7px;
 }
+.root{
+  height: 100%;
+  width: 100%;
+  background-size: cover;
+  
+  background-image: url(./image_sources/payroll_image.jpg);
+}

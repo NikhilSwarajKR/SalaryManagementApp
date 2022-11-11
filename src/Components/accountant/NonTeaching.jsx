@@ -9,7 +9,7 @@ import Breadcrumbs from '@mui/material/Breadcrumbs';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import Link from '@mui/material/Link';
 
-export default function Teaching() {
+export default function NonTeaching() {
   const navigate = useNavigate();
   const [data, setData] = useState([]);
   const [loading,setLoading]= useState(false);

@@ -6,6 +6,7 @@ import {doc,setDoc} from "firebase/firestore";
 import Breadcrumbs from '@mui/material/Breadcrumbs';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import Link from '@mui/material/Link';
+import AdminHeader from './AdminHeader';
 
 function EditPayScale() {
     const navigate = useNavigate();
@@ -41,11 +42,13 @@ function EditPayScale() {
     navigate('/PayScales');
 }
   return (
-        <div className='rendering'>
+        <div>
+            <AdminHeader/>
+            <div className='rendering'>
         <Breadcrumbs separator={<NavigateNextIcon fontSize="small" />}aria-label="breadcrumb">
-            <Link underline="hover" key="1" color="inherit" href="/" >Home</Link>
+            <Link underline="hover" key="1" color="inherit" href="/AdminProfile" >Home</Link>
             <Link underline="hover" key="2" color="inherit" href="/PayScales" >Pay Scales</Link>
-            <Link underline="hover" key="3" color="inherit" href="/EditPayScales" >Edit Pay Scale</Link>
+            <Link underline="hover" key="3" color="inherit" href="/EditPayScale" >Edit Pay Scale</Link>
         </Breadcrumbs>
         <div className='rendering'>
         
@@ -93,6 +96,7 @@ function EditPayScale() {
       
     </div>
     </div>
+        </div>
     
   )
 }

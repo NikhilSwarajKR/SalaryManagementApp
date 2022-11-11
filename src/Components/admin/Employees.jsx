@@ -8,6 +8,7 @@ import Box from '@mui/material/Box';
 import Breadcrumbs from '@mui/material/Breadcrumbs';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import Link from '@mui/material/Link';
+import AdminHeader from './AdminHeader';
 
 export default function Employees() {
   const navigate = useNavigate();
@@ -55,7 +56,8 @@ export default function Employees() {
           qualification: emp.data().qualification,
           doj: emp.data().doj,
           bpsID:emp.data().paygrade,
-          imageID:emp.data().img
+          imageID:emp.data().img,
+          usersDocID:emp.data().usersDocID
       });
     });
     deptStore.forEach((dept) => {
@@ -126,22 +128,27 @@ export default function Employees() {
     }];
     
     return(
+     <div>
+      <AdminHeader/>
+       
       <div className='rendering'>
-    <Breadcrumbs separator={<NavigateNextIcon fontSize="small" />}aria-label="breadcrumb">
-        <Link underline="hover" key="1" color="inherit" href="/" >Home</Link>
+      <Breadcrumbs separator={<NavigateNextIcon fontSize="small" />}aria-label="breadcrumb">
+        <Link underline="hover" key="1" color="inherit" href="/AdminProfile" >Home</Link>
         <Link underline="hover" key="2" color="inherit" href="/Employees" >Employees</Link>
     </Breadcrumbs>
+      <div className='rendering'>
+   
      <div>
             <Button variant="contained" onClick={()=>navigate('/CreateEmployee')}>Create new Employee</Button>
       </div>
-      <div className='rendering'>
           {loading ?(
-            <DataTable columns={cols} data={data} title="Employees" pagination responsive fixedHeader fixedHeaderScrollHeight="400px"/>
+            <DataTable columns={cols} data={data} title="Employees" pagination responsive fixedHeader/>
           ):(
             <h1>Loading</h1>
           )}
       </div>
       </div>
+     </div>
     );
  
 }

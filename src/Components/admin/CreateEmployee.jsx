@@ -10,6 +10,7 @@ import Breadcrumbs from '@mui/material/Breadcrumbs';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import Link from '@mui/material/Link';
 import { v4 } from "uuid";
+import AdminHeader from "./AdminHeader";
 
 
 function CreateEmployee() {
@@ -93,9 +94,11 @@ function CreateEmployee() {
   }, [loader]);
 
   return (
-    <div className='rendering'>
+    <div>
+      <AdminHeader/>
+      <div className='rendering'>
     <Breadcrumbs separator={<NavigateNextIcon fontSize="small" />}aria-label="breadcrumb">
-        <Link underline="hover" key="1" color="inherit" href="/" >Home</Link>
+        <Link underline="hover" key="1" color="inherit" href="/AdminProfile" >Home</Link>
         <Link underline="hover" key="2" color="inherit" href="/Employees" >Employees</Link>
         <Link underline="hover" key="3" color="inherit" href="/CreateEmployee" >Create Employee</Link>
     </Breadcrumbs>
@@ -162,11 +165,12 @@ function CreateEmployee() {
             ))}
           </select>
           </div>
-        <Button type="submit" variant="contained">Create</Button>
+        <Button type="submit" className="rounded mx-auto d-block" variant="contained">Create</Button>
         </form>
       ) : (
         <h1>Loading</h1>
       )}
+    </div>
     </div>
     </div>
   );

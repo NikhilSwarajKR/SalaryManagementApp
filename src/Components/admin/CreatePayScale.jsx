@@ -57,41 +57,41 @@ function CreatePayScale() {
             <div className="input-group mb-3">
                 <span className="input-group-text" >PayScale ID &nbsp;&nbsp;&nbsp;&nbsp;</span>
                 <span className="input-group-text" >BPS</span>
-                <input type="number" class="form-control" required id="bps_Id" />
+                <input type="number" className="form-control" required id="bps_Id" />
             </div>
             <div className="input-group mb-3">
                 <span className="input-group-text" >Designation &nbsp;&nbsp;&nbsp;&nbsp;</span>
-                <input type="text" class="form-control" required id="designation"   />
+                <input type="text" className="form-control" required id="designation"   />
             </div>
             <div className="input-group mb-3">
                 <span className="input-group-text" >Basic Pay &nbsp;&nbsp;&nbsp;&nbsp;</span>
-                <input type="number" class="form-control" required id="basic" />
+                <input type="number" className="form-control" required id="basic" />
             </div>
             <div className="input-group mb-3">
                 <span className="input-group-text" >Dearness Allowance(DA) &nbsp;&nbsp;&nbsp;&nbsp;</span>
                 <span className="input-group-text" >%</span>
-                <input type="number" class="form-control" required id="da"  />
+                <input type="number" className="form-control" required id="da"  />
             </div>
             <div className="input-group mb-3">
                 <span className="input-group-text" >House Rent Allowance(HRA) &nbsp;&nbsp;&nbsp;&nbsp;</span>
                 <span className="input-group-text" >%</span>
-                <input type="number" class="form-control" required id="hra"  />
+                <input type="number" className="form-control" required id="hra"  />
             </div>
             <div className="input-group mb-3">
                 <span className="input-group-text" >Provident Fund(PF) &nbsp;&nbsp;&nbsp;&nbsp;</span>
-                <input type="number" class="form-control" required id="pf"  />
+                <input type="number" className="form-control" required id="pf"  />
             </div>
             <div className="input-group mb-3">
                 <span className="input-group-text" >Grade Pay &nbsp;&nbsp;&nbsp;&nbsp;</span>
-                <input type="number" class="form-control" required id="grade_pay"  />
+                <input type="number" className="form-control" required id="grade_pay"  />
             </div>
             <div className="input-group mb-3">
                 <span className="input-group-text" >Profession Tax &nbsp;&nbsp;&nbsp;&nbsp;</span>
-                <input type="number" class="form-control" required id="pt"  />
+                <input type="number" className="form-control" required id="pt"  />
             </div>
             <div className="input-group mb-3">
                 <span className="input-group-text" >Travel Allowance &nbsp;&nbsp;&nbsp;&nbsp;</span>
-                <input type="number" class="form-control" required  id="ta"  />
+                <input type="number" className="form-control" required  id="ta"  />
             </div>
             <Button type="submit" variant="contained" onClick={handleSubmit}>Submit</Button>
         </form>

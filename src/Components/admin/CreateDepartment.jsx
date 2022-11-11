@@ -63,19 +63,19 @@ function CreateDepartment() {
           <div className="input-group mb-3">
             <span className="input-group-text" >Department ID &nbsp;&nbsp;&nbsp;&nbsp;</span>
             <span className="input-group-text" >SJCD</span>
-            <input type="number" class="form-control" required id="dept_id"  label="Department ID" />
+            <input type="number" className="form-control" required id="dept_id"  label="Department ID" />
           </div>
 
           <div className="input-group mb-3">
             <span className="input-group-text" >Department Name</span>
-            <input type="text" class="form-control" required id="dept_name" label="Department Name"/>
+            <input type="text" className="form-control" required id="dept_name" label="Department Name"/>
           </div>
 
           <div className="input-group mb-3">
             <span className="input-group-text">Department Category </span>
-            <select required  className="form-select" name="dept_cat" id="dept_cat">
-            <option value="" selected disabled hidden>
-                Select the department
+            <select required  className="form-select" name="dept_cat" id="dept_cat" defaultValue='def'>
+            <option value="def" disabled hidden>
+                Select the Category
               </option>
               {deptCat.map((depc) => (
                 <option key={depc.deptCatID} value={depc.deptCatID}>

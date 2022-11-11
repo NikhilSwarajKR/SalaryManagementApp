@@ -12,7 +12,7 @@ function EditPayScale() {
     var refBPSData=JSON.parse(localStorage.getItem('RefBPSData'));
     const handleSubmit = async (e) => {
         e.preventDefault();
-        var bps_Id = document.getElementById("bps_Id").value;
+        var bps_Id = document.getElementById("bps_Id").value.toLowerCase();
         const basic = parseFloat(document.getElementById("basic").value);
         const da = parseFloat(document.getElementById("da").value);
         const designation = document.getElementById("designation").value;

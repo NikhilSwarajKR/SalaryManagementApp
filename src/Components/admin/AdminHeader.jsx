@@ -21,6 +21,8 @@ import EditDepartment from './EditDepartment';
 import CreateDepartment from './CreateDepartment';
 import CreatePayScale from './CreatePayScale';
 import EditPayScale from './EditPayScale';
+import CreateEmployee from './CreateEmployee';
+import ManageEmployee from './ManageEmployee';
 
 const AdminHeader = () => {
   const navigate = useNavigate();
@@ -170,10 +172,13 @@ const AdminHeader = () => {
       </AppBar>
       <Routes>
         <Route exact path='/Departments' element={<Departments/>}/>
-        <Route exact path='/Employees' element={<Employees/>}/>
-        <Route exact path='/PayScales' element={<PayScales/>}/>
         <Route exact path='/EditDepartment' element={<EditDepartment/>}/>
         <Route exact path='/CreateDepartment' element={<CreateDepartment/>}></Route>
+        
+        <Route exact path='/Employees' element={<Employees/>}/>
+        <Route exact path='/CreateEmployee' element={<CreateEmployee/>}></Route>
+        <Route exact path='/ManageEmployee' element={<ManageEmployee/>}></Route>
+        <Route exact path='/PayScales' element={<PayScales/>}/>     
         <Route exact path='/CreatePayScale' element={<CreatePayScale/>}></Route>
         <Route exact path='/EditPayScale' element={<EditPayScale/>}></Route>
 

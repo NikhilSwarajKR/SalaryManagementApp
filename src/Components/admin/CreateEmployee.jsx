@@ -109,7 +109,7 @@ function CreateEmployee() {
           </div>
           <div className="input-group mb-3">
             <span className="input-group-text" >Employee Photo &nbsp;&nbsp;&nbsp;&nbsp;</span>
-            <input type="file" accept="image/png, image/jpeg" className="form-control" onChange={(event) => {setImageUpload(event.target.files[0]);}} />
+            <input type="file" required accept="image/png, image/jpeg" className="form-control" onChange={(event) => {setImageUpload(event.target.files[0]);}} />
           </div>
      
           <div className="input-group mb-3">

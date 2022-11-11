@@ -1,5 +1,5 @@
 import React from 'react';
-import './App.css';
+//import './App.css';
 import {Route, Routes} from "react-router-dom";
 import AccountantHeader from './Components/accountant/AccountantHeader';
 import AdminHeader from './Components/admin/AdminHeader';

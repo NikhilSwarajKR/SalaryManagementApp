@@ -21,11 +21,12 @@ const authorizeUser= async(uid)=>{
     const q=query(collection(db,'users'),where('uid','==',uid))
     const docSnap = await getDocs(q);
     let usersDocID=docSnap.docs[0].id;
+    let usersEmailID=docSnap.docs[0].data().email;
     const adQ=query(collection(db,'accountant'),where('usersDocID','==',usersDocID))
     const adSnap = await getDocs(adQ);
     const accID=adSnap.docs[0].id;
     console.log(accID);
-    const accountant={accountantID:accID,userTYPE:'admin'}
+    const accountant={accountantID:accID,usersDocID:usersDocID,userEmailID:usersEmailID}
     localStorage.setItem('accountantData',JSON.stringify(accountant))
     window.location='/AccountantProfile'
   }

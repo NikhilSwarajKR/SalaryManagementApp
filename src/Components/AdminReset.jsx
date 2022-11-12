@@ -26,6 +26,7 @@ function AdminReset() {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="E-mail Address"
+            required
           />
         
           <Stack spacing={3} direction="column">  

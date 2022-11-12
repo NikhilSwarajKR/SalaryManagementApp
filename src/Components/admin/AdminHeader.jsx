@@ -13,6 +13,7 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import CurrencyRupeeIcon from '@mui/icons-material/CurrencyRupee';
 import { useNavigate } from 'react-router-dom';
+import AdminImage from '../image_sources/admin_image.webp'
 
 import {logout} from "./../AdminAuth";
 const AdminHeader = () => {
@@ -143,7 +144,7 @@ const AdminHeader = () => {
             <Box sx={{ flexGrow: 0 }}>
               <Tooltip title="Open settings">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                  <Avatar alt="Admin" src={AdminImage} />
                 </IconButton>
               </Tooltip>
               <Menu
@@ -163,10 +164,10 @@ const AdminHeader = () => {
                 onClose={handleCloseUserMenu}
               >
               <MenuItem>
-                <Typography textAlign="center"onClick={() => navigate('/AdminProfile')}>Change Passsword</Typography>
+                <Typography textAlign="center"onClick={() => navigate('/AdminProfile')}>&nbsp;&nbsp;Profile&nbsp;&nbsp;</Typography>
               </MenuItem>
               <MenuItem>
-                <Typography textAlign="center"onClick={navigateLogout}>Logout</Typography>
+                <Typography textAlign="center"onClick={navigateLogout}>&nbsp;&nbsp;Logout&nbsp;&nbsp;</Typography>
               </MenuItem>
               </Menu>
             </Box>

@@ -34,6 +34,7 @@ function AdminLogin() {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           placeholder="E-mail Address"
+          required
         />
         <input
           type="password"
@@ -41,6 +42,7 @@ function AdminLogin() {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           placeholder="Password"
+          required
         />
             
     <Stack spacing={3} direction="column">  

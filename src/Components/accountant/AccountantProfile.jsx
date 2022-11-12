@@ -5,6 +5,9 @@ function AccountantProfile() {
   return (
     <div>
      <AccountantHeader/>
+     <div>
+        
+     </div>
     </div>
   )
 }

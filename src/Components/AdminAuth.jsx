@@ -15,10 +15,6 @@ import {
   where,
   addDoc,
 } from "firebase/firestore";
-import { useCookies } from 'react-cookie';
-import { useNavigate } from 'react-router-dom';
-
-
 
 const googleProvider = new GoogleAuthProvider();
 
@@ -26,11 +22,13 @@ const authorizeUser= async(uid)=>{
     try{
       const q=query(collection(db,'users'),where('uid','==',uid))
       const docSnap = await getDocs(q);
-      let usersDocID=docSnap.docs[0].id;
+      const usersDocID=docSnap.docs[0].id;
+      const usersEmailID=docSnap.docs[0].data().email;
       const adQ=query(collection(db,'admin'),where('usersDocID','==',usersDocID))
       const adSnap = await getDocs(adQ);
       const adminID=adSnap.docs[0].id;
-      const admin={adminID:adminID,userTYPE:'admin'}
+      const adminName=adSnap.docs[0].data().name;
+      const admin={adminID:adminID,adminName:adminName,usersDocID:usersDocID,userEmailID:usersEmailID}
       localStorage.setItem('adminData',JSON.stringify(admin))
       window.location='/AdminProfile'
     }

@@ -68,6 +68,7 @@ function CreatePayScale() {
             </div>
             <div className="input-group mb-3">
                 <span className="input-group-text" >Basic Pay &nbsp;&nbsp;&nbsp;&nbsp;</span>
+                <span className="input-group-text" >&#8377;</span>
                 <input type="number" className="form-control" required id="basic" />
             </div>
             <div className="input-group mb-3">
@@ -82,18 +83,22 @@ function CreatePayScale() {
             </div>
             <div className="input-group mb-3">
                 <span className="input-group-text" >Provident Fund(PF) &nbsp;&nbsp;&nbsp;&nbsp;</span>
+                <span className="input-group-text" >%</span>
                 <input type="number" className="form-control" required id="pf"  />
             </div>
             <div className="input-group mb-3">
                 <span className="input-group-text" >Grade Pay &nbsp;&nbsp;&nbsp;&nbsp;</span>
+                <span className="input-group-text" >&#8377;</span>
                 <input type="number" className="form-control" required id="grade_pay"  />
             </div>
             <div className="input-group mb-3">
                 <span className="input-group-text" >Profession Tax &nbsp;&nbsp;&nbsp;&nbsp;</span>
+                <span className="input-group-text" >&#8377;</span>
                 <input type="number" className="form-control" required id="pt"  />
             </div>
             <div className="input-group mb-3">
                 <span className="input-group-text" >Travel Allowance &nbsp;&nbsp;&nbsp;&nbsp;</span>
+                <span className="input-group-text" >&#8377;</span>
                 <input type="number" className="form-control" required  id="ta"  />
             </div>
             <Button type="submit" variant="contained" onClick={handleSubmit}>Create</Button>

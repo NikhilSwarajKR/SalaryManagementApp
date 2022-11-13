@@ -103,7 +103,7 @@ function EmployeeProfile() {
                     <TextField
                         id="filled-read-only-input"
                         label="Employee ID"
-                        defaultValue={data.empID}
+                        defaultValue={data.empID.toUpperCase()}
                         InputProps={{
                           readOnly: true,
                         }}

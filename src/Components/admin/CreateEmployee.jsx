@@ -42,11 +42,10 @@ function CreateEmployee() {
       const paygrade = document.getElementById("paygrade").value;
       var imgID=uploadImage();
       emp_id='sjce'+emp_id
-      var uid;
+      var docID;
       try{
-        uid= await registerWithEmailAndPassword(email,v4().replaceAll('-', '').substring(0,8));
+        docID= await registerWithEmailAndPassword(email,v4().replaceAll('-', '').substring(0,8));
         await sendPasswordResetEmail(auth, email);
-        console.log(uid)
         try {
           await setDoc(doc(db, "employees", emp_id), {
             name: {first:first,last:last},
@@ -56,7 +55,7 @@ function CreateEmployee() {
             pre_yoe: {months:months,years:years},
             paygrade: paygrade,
             doj: Timestamp.fromDate(DOJ),
-            usersDocID:uid
+            usersDocID:docID.id
           });
         } catch (error) {
           console.log(error);

@@ -1,10 +1,11 @@
-import React,{useState, useEffect} from 'react'
+import React,{useState, useEffect} from 'react';
 import {db,storage} from '../../firebase';
 import {collection, query,where, getDocs} from 'firebase/firestore';
 import DataTable from 'react-data-table-component';
-import './styles/Common.css'
-import Button from '@mui/material/Button'
-import { useNavigate } from 'react-router-dom';
+import './styles/Common.css';
+import Button from '@mui/material/Button';
+import {useNavigate} from 'react-router-dom';
+import Box from '@mui/material/Box';
 import Breadcrumbs from '@mui/material/Breadcrumbs';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import Link from '@mui/material/Link';
@@ -24,6 +25,7 @@ export default function NonTeaching() {
     const bpsSnap = await getDocs(bpsRef);
     let deptStore=[],bpsStore=[],empStore=[];
     let temp=[];
+    
     deptSnap.forEach((dept)=>{
       deptStore.push({
         deptID:dept.id,
@@ -39,7 +41,9 @@ export default function NonTeaching() {
         bpsDA: bSal.data().da,
         bpsHRA: bSal.data().hra,
         bpsPF: bSal.data().pf,
-        bpsTA: bSal.data().ta, 
+        bpsPT: bSal.data().pt,
+        bpsTA: bSal.data().ta,
+        bpsAGP: bSal.data().grade_pay, 
       });
     });
 
@@ -89,7 +93,12 @@ export default function NonTeaching() {
   }
   const cols=[
     {
-      name: 'First Name',
+      name: 'Employee ID',
+      selector: row => row.empID.toUpperCase(),
+      sortable: true,
+    },
+    {
+      name: 'Employee Name',
       selector: row => row.firstName+" "+row.lastName,
       sortable: true,
     },
@@ -97,7 +106,7 @@ export default function NonTeaching() {
       name: 'Qualification',
       selector: row => row.qualification,
       sortable: true,
-    },
+    }, 
     {
       name: 'Designation',
       selector: row => row.designation,
@@ -112,14 +121,12 @@ export default function NonTeaching() {
       name: 'Date Of Joining',
       selector: row => row.doj.toDate().toLocaleDateString('en-IN'),
       sortable: true,
-     },
- 
+  },
     {
       cell: row => <Button variant="contained" color='success' onClick={()=>navigateEmployee(row.empID)}>View</Button>,
       allowOverflow: true,
       button: true,
     }];
-
     
     return(
       <div>
@@ -127,9 +134,9 @@ export default function NonTeaching() {
         <div className='rendering'>
           <Breadcrumbs separator={<NavigateNextIcon fontSize="small" />}aria-label="breadcrumb">
               <Link underline="hover" key="1" color="inherit" href="/AccountantProfile" >Home</Link>
-              <Link underline="hover" key="2" color="inherit" href="/NonTeaching" >Non Teaching</Link>
+              <Link underline="hover" key="2" color="inherit" href="/Teaching" >Teaching</Link>
           </Breadcrumbs>
-          <div className='Teaching rendering'>
+          <div className='rendering'>
             {loading ?(
               <DataTable columns={cols} data={data} title="Non-Teaching Staffs" pagination responsive fixedHeader fixedHeaderScrollHeight="400px"/>
             ):(

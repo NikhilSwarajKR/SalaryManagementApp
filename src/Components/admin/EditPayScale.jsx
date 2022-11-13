@@ -63,6 +63,7 @@ function EditPayScale() {
             </div>
             <div className="input-group mb-3">
                 <span className="input-group-text" >Basic Pay &nbsp;&nbsp;&nbsp;&nbsp;</span>
+                <span className="input-group-text" >&#8377;</span>
                 <input type="number" className="form-control" required id="basic" defaultValue={refBPSData.basic}/>
             </div>
             <div className="input-group mb-3">
@@ -77,18 +78,22 @@ function EditPayScale() {
             </div>
             <div className="input-group mb-3">
                 <span className="input-group-text" >Provident Fund(PF) &nbsp;&nbsp;&nbsp;&nbsp;</span>
+                <span className="input-group-text" >%</span>
                 <input type="number" className="form-control" required id="pf" defaultValue={refBPSData.pf} />
             </div>
             <div className="input-group mb-3">
                 <span className="input-group-text" >Grade Pay &nbsp;&nbsp;&nbsp;&nbsp;</span>
+                <span className="input-group-text" >&#8377;</span>
                 <input type="number" className="form-control" required id="grade_pay" defaultValue={refBPSData.gradePay} />
             </div>
             <div className="input-group mb-3">
                 <span className="input-group-text" >Profession Tax &nbsp;&nbsp;&nbsp;&nbsp;</span>
+                <span className="input-group-text" >&#8377;</span>
                 <input type="number" className="form-control" required id="pt" defaultValue={refBPSData.pt} />
             </div>
             <div className="input-group mb-3">
                 <span className="input-group-text" >Travel Allowance &nbsp;&nbsp;&nbsp;&nbsp;</span>
+                <span className="input-group-text" >&#8377;</span>
                 <input type="number" className="form-control" required  id="ta" defaultValue={refBPSData.ta} />
             </div>
             <Button type="submit" variant="contained" onClick={handleSubmit}>Edit</Button>

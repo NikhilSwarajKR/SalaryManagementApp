@@ -8,8 +8,7 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import Alert from '@mui/material/Alert';
-import jsPDF from 'jspdf';
-import ViewReport from './ViewReport';
+
 
 function EmployeeReports() {
   const [transactionsData, setData] = useState([]);

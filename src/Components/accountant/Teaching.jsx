@@ -9,6 +9,7 @@ import Box from '@mui/material/Box';
 import Breadcrumbs from '@mui/material/Breadcrumbs';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import Link from '@mui/material/Link';
+import AccountantHeader from './AccountantHeader';
 
 export default function Teaching() {
   const navigate = useNavigate();
@@ -56,6 +57,8 @@ export default function Teaching() {
           qualification: emp.data().qualification,
           doj: emp.data().doj,
           bpsID:emp.data().paygrade,
+          imageID:emp.data().img,
+          usersDocID:emp.data().usersDocID
       });
     });
     deptStore.forEach((dept) => {
@@ -126,17 +129,20 @@ export default function Teaching() {
     }];
     
     return(
-      <div className='rendering'>
-    <Breadcrumbs separator={<NavigateNextIcon fontSize="small" />}aria-label="breadcrumb">
-        <Link underline="hover" key="1" color="inherit" href="/" >Home</Link>
-        <Link underline="hover" key="2" color="inherit" href="/Teaching" >Teaching</Link>
-    </Breadcrumbs>
-      <div className='Teaching rendering'>
-          {loading ?(
-            <DataTable columns={cols} data={data} title="Teaching Staffs" pagination responsive fixedHeader fixedHeaderScrollHeight="400px"/>
-          ):(
-            <h1>Loading</h1>
-          )}
+      <div>
+        <AccountantHeader/>
+        <div className='rendering'>
+          <Breadcrumbs separator={<NavigateNextIcon fontSize="small" />}aria-label="breadcrumb">
+              <Link underline="hover" key="1" color="inherit" href="/AccountantProfile" >Home</Link>
+              <Link underline="hover" key="2" color="inherit" href="/Teaching" >Teaching</Link>
+          </Breadcrumbs>
+          <div className='Teaching rendering'>
+            {loading ?(
+              <DataTable columns={cols} data={data} title="Teaching Staffs" pagination responsive fixedHeader fixedHeaderScrollHeight="400px"/>
+            ):(
+              <h1>Loading</h1>
+            )}
+          </div>
       </div>
       </div>
     );

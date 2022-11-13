@@ -1,35 +1,34 @@
+.loginpage{
+  background: url("./image_sources/Logo.png") no-repeat;
+  background-position: 5em 3em;
+  font-family: "Lato", sans-serif;
+}
+
 .login {
-  height: 100vh;
-  width: 100vw;
+  margin-top: 80px;
   display: flex;
-  align-items: center;
   justify-content: center;
 }
 
 .login__container {
-  display: flex;
+  background-color: whitesmoke;
+  padding: 30px;
   flex-direction: column;
   text-align: center;
-  background-color: white;
-  padding: 30px;
+  border-radius: 15px;
+  border-style: groove;
+  border-color: azure;
 }
 
 .login__textBox {
-  padding: 10px;
+  padding: 5px;
   width: 100%;
   font-size: 18px;
   margin-bottom: 10px;
-  border-radius: 2px;
+  border-radius: 5px;
+}
+.link{
+  text-decoration: none;
+  color: black;
 }
 
-.root{
-  height: 100%;
-  width: 100%;
-  background-size: cover;
-  
-  background-image: url(./image_sources/payroll_image.jpg);
-}
-
-.login div {
-  margin-top: 0px;
-}

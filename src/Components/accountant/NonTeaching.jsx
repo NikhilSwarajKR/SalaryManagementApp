@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import Breadcrumbs from '@mui/material/Breadcrumbs';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import Link from '@mui/material/Link';
+import AccountantHeader from './AccountantHeader';
 
 export default function NonTeaching() {
   const navigate = useNavigate();
@@ -52,6 +53,8 @@ export default function NonTeaching() {
           qualification: emp.data().qualification,
           doj: emp.data().doj,
           bpsID:emp.data().paygrade,
+          imageID:emp.data().img,
+          usersDocID:emp.data().usersDocID
       });
     });
     deptStore.forEach((dept) => {
@@ -119,18 +122,20 @@ export default function NonTeaching() {
 
     
     return(
-      <div className='rendering'>
-      <Breadcrumbs separator={<NavigateNextIcon fontSize="small" />}aria-label="breadcrumb">
-          <Link underline="hover" key="1" color="inherit" href="/" >Home</Link>
-          <Link underline="hover" key="2" color="inherit" href="/NonTeaching" >Non Teaching</Link>
-      </Breadcrumbs>
-      <div className='Teaching rendering'>
-        
-          {loading ?(
-            <DataTable columns={cols} data={data} title="Non Teaching Staffs" pagination responsive fixedHeader fixedHeaderScrollHeight="400px"/>
-          ):(
-            <h1>Loading</h1>
-          )}
+      <div>
+        <AccountantHeader/>
+        <div className='rendering'>
+          <Breadcrumbs separator={<NavigateNextIcon fontSize="small" />}aria-label="breadcrumb">
+              <Link underline="hover" key="1" color="inherit" href="/AccountantProfile" >Home</Link>
+              <Link underline="hover" key="2" color="inherit" href="/NonTeaching" >Non Teaching</Link>
+          </Breadcrumbs>
+          <div className='Teaching rendering'>
+            {loading ?(
+              <DataTable columns={cols} data={data} title="Non-Teaching Staffs" pagination responsive fixedHeader fixedHeaderScrollHeight="400px"/>
+            ):(
+              <h1>Loading</h1>
+            )}
+          </div>
       </div>
       </div>
     );

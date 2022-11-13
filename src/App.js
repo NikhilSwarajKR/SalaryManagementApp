@@ -25,6 +25,8 @@ import GenerateSalarySlip from './Components/accountant/GenerateSalarySlip';
 import EmployeeReports from './Components/accountant/EmployeeReports';
 import AllReports from './Components/accountant/AllReports';
 import ViewReport from './Components/accountant/ViewReport';
+import EmployeeProfile from './Components/employee/EmployeeProfile';
+import SalarySlips from './Components/employee/SalarySlips';
 
 function App() {
   return (
@@ -59,7 +61,8 @@ function App() {
           
           <Route exact path="/EmployeeLogin" element={<EmployeeLogin />} />
           <Route exact path="/EmployeeReset" element={<EmployeeReset/>} />
-
+          <Route exact path="/EmployeeProfile" element={<EmployeeProfile/>}/>
+          <Route exact path="SalarySlips" element={<SalarySlips/>}/>
       </Routes>
     </div>
   );

@@ -7,8 +7,8 @@ import Alert from '@mui/material/Alert';
 import Snackbar from '@mui/material/Snackbar';
 import { doc, setDoc, Timestamp } from "firebase/firestore";
 import {db} from '../../firebase';
-import uuid from 'react-uuid';
-
+import { v4 } from "uuid";
+import { Grid } from '@mui/material';
 
 export default function GenerateSalarySlip() {
     const [loading,setLoading]= useState(false);
@@ -113,7 +113,7 @@ export default function GenerateSalarySlip() {
 
     const uploadTransaction=async(e)=>{
         e.preventDefault();
-        var transID = uuid().replaceAll('-', '');
+        var transID =v4().replaceAll('-', '');
         const docData = {
           empID:empData.empID,
           empName:empData.firstName+" "+empData.lastName,
@@ -159,11 +159,12 @@ export default function GenerateSalarySlip() {
             }}
             noValidate
             autoComplete="off">
-            <div>
-                <TextField id="fromDate" onChange={handleChange} type="date" InputProps={{startAdornment: <InputAdornment position="start">From Date</InputAdornment>}}required/>  
-                <TextField id="toDate" onChange={handleChange} type="date" InputProps={{startAdornment: <InputAdornment position="start">To Date</InputAdornment>}}required/>
-            </div>
-            
+              <Grid container spacing={0} direction="column" alignItems="center" justifyContent="center">
+                <div className=" mb-3 align-items-center">
+                  <TextField id="fromDate" onChange={handleChange} type="date" InputProps={{startAdornment: <InputAdornment position="start">From Date</InputAdornment>}}required/>  
+                  <TextField id="toDate" onChange={handleChange} type="date" InputProps={{startAdornment: <InputAdornment position="start">To Date</InputAdornment>}}required/>
+                </div>
+               </Grid> 
             <div>            
                 <TextField id="basic" label="Basic Salary" type="number" InputProps={{inputProps: {defaultValue:0,readOnly: true}}} required/>
                 <TextField id="hra" label="House Rent Allowance(HRA)"  type="number" InputProps={{inputProps: {defaultValue:0,readOnly: true}}} required/>
@@ -185,7 +186,10 @@ export default function GenerateSalarySlip() {
                 <TextField id="netSalary" label="Net Salary" type="number" InputProps={{inputProps: {defaultValue:0,readOnly: true}}} required/>
             </div>
             <div>
-                <Button variant="contained" id="submitButton" onClick={uploadTransaction}>Submit</Button>
+            <Grid container spacing={0} direction="column" alignItems="center" justifyContent="center">
+              <Button variant="contained" id="submitButton" onClick={uploadTransaction}>Submit</Button>
+            </Grid>
+                
             </div>
           
            </Box>       

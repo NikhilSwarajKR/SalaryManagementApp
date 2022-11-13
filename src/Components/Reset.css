@@ -1,23 +1,31 @@
 .reset {
-  height: 100vh;
-  width: 100vw;
+  height:300px;
+  background: url("./image_sources/Logo.png") no-repeat;
+  background-position:5em 1em;
+  font-family: "Lato", sans-serif;
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-top: 150px;
 }
 
 .reset__container {
+  width: 500px;
   display: flex;
   flex-direction: column;
   text-align: center;
-  background-color: #dcdcdc;
+  background-color: whitesmoke;
   padding: 30px;
+  border-radius: 15px;
+  border-style: groove;
+  border-color: azure;
 }
 
 .reset__textBox {
   padding: 10px;
   font-size: 18px;
   margin-bottom: 10px;
+  border-radius: 5px;
 }
 
 .reset__btn {
@@ -35,7 +43,4 @@
 .root{
   height: 100%;
   width: 100%;
-  background-size: cover;
-  
-  background-image: url(./image_sources/payroll_image.jpg);
 }

@@ -13,14 +13,19 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import CurrencyRupeeIcon from '@mui/icons-material/CurrencyRupee';
 import { useNavigate } from 'react-router-dom';
-import AdminImage from '../image_sources/admin_image.webp';
 import Cookies from 'js-cookie';
+import {ref,getDownloadURL} from "firebase/storage";
+import {doc,getDoc} from 'firebase/firestore';
+import { db ,storage} from "../../firebase";
 
 import {logout} from "./../AdminAuth";
-const AdminHeader = () => {
+  const EmployeeHeader = () => {
   const navigate = useNavigate();
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
+  const [loading,setLoading]= useState(false);
+  const [imageURL, setURL] = useState();
+
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
@@ -37,13 +42,28 @@ const AdminHeader = () => {
   };
   const navigateLogout=()=>{
     localStorage.clear();
-    Cookies.remove('adminData', { path: '' });
+    Cookies.remove('employeeData', { path: '' });
     logout();
     navigate('/');
   }
+  
+  const fetchImage=async(id)=>{
+    const empRef = doc(db, "employees", id);
+    const docSnap = await getDoc(empRef);
+    const imageRef = ref(storage, `employee_images/${docSnap.data().img}`)
+    getDownloadURL(imageRef)
+    .then((url) => {
+        setLoading(true);
+        setURL(url)
+    })
+    .catch((error) => {
+      console.log(error)
+    });
+  }
   const checkUser=()=>{
-    const adminData=JSON.parse(Cookies.get('adminData'))
-    if(adminData){
+    const employeeData=JSON.parse(Cookies.get('employeeData'))
+    if(employeeData){
+        fetchImage(employeeData.employeeID)
       return
     }
     else{
@@ -52,9 +72,11 @@ const AdminHeader = () => {
   }
   useEffect(()=>{
     checkUser()
-  },[])
+  },[loading])
   return (
-    <div className="Header">
+    <div>
+        {loading ?(
+     <div className="Header">
       <AppBar position="static">
         <Container maxWidth="xl">
           <Toolbar disableGutters>
@@ -63,7 +85,7 @@ const AdminHeader = () => {
               variant="h6"
               noWrap
               component="a"
-              href="/AdminProfile"
+              href="/EmployeeProfile"
               sx={{
                 mr: 2,
                 display: { xs: 'none', md: 'flex' },
@@ -108,13 +130,10 @@ const AdminHeader = () => {
               >
                 
               <MenuItem>
-                <Typography textAlign="center"onClick={() => navigate('Departments')}>Departments</Typography>
+                <Typography textAlign="center"onClick={() => navigate('EmployeeProfile')}>Profile</Typography>
               </MenuItem>
               <MenuItem>
-                <Typography textAlign="center"onClick={() => navigate('Employees')}>Employees</Typography>
-              </MenuItem>
-              <MenuItem>
-                <Typography textAlign="center"onClick={() => navigate('PayScales')}>Pay Scales</Typography>
+                <Typography textAlign="center"onClick={() => navigate('SalarySlips')}>Salary Slips</Typography>
               </MenuItem>
               </Menu>
             </Box>
@@ -123,7 +142,7 @@ const AdminHeader = () => {
               variant="h5"
               noWrap
               component="a"
-              href="/AdminProfile"
+              href="/EmployeeProfile"
               sx={{
                 mr: 2,
                 display: { xs: 'flex', md: 'none' },
@@ -138,15 +157,14 @@ const AdminHeader = () => {
              SALAIRE
             </Typography>
             <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-              <Button sx={{ my: 2, color: 'white', display: 'block' }} onClick={() => navigate('/Departments')}>Departments</Button>
-              <Button sx={{ my: 2, color: 'white', display: 'block' }} onClick={() => navigate('/Employees')}>Employees</Button>
-              <Button sx={{ my: 2, color: 'white', display: 'block' }} onClick={() => navigate('/PayScales')}>Pay Scales</Button>
+              <Button sx={{ my: 2, color: 'white', display: 'block' }} onClick={() => navigate('/EmployeeProfile')}>Profile</Button>
+              <Button sx={{ my: 2, color: 'white', display: 'block' }} onClick={() => navigate('/SalarySlips')}>Salary Slips</Button>
             </Box>
 
             <Box sx={{ flexGrow: 0 }}>
               <Tooltip title="Open settings">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <Avatar alt="Admin" src={AdminImage} />
+                  <Avatar alt="Employee" src={imageURL} />
                 </IconButton>
               </Tooltip>
               <Menu
@@ -166,7 +184,7 @@ const AdminHeader = () => {
                 onClose={handleCloseUserMenu}
               >
               <MenuItem>
-                <Typography textAlign="center"onClick={() => navigate('/AdminProfile')}>&nbsp;&nbsp;Profile&nbsp;&nbsp;</Typography>
+                <Typography textAlign="center"onClick={() => navigate('/EmployeeProfile')}>&nbsp;&nbsp;Profile&nbsp;&nbsp;</Typography>
               </MenuItem>
               <MenuItem>
                 <Typography textAlign="center" onClick={navigateLogout}>&nbsp;&nbsp;Logout&nbsp;&nbsp;</Typography>
@@ -176,7 +194,12 @@ const AdminHeader = () => {
           </Toolbar>
         </Container>
       </AppBar>
-    </div>  
+    </div>
+    ):(
+        <div/>
+      )}  
+    </div>
+    
   );
 };
-export default AdminHeader;
+export default EmployeeHeader;

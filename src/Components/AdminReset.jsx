@@ -17,7 +17,6 @@ function AdminReset() {
   return (
     <div>
      <NavBar/>
-    <div className="root">
       <div className="reset">
         <div className="reset__container">
           <input
@@ -37,7 +36,6 @@ function AdminReset() {
         
         </div>
       </div>
-    </div>
    </div>
   );
 }

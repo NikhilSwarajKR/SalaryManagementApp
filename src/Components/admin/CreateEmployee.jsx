@@ -19,7 +19,7 @@ function CreateEmployee() {
     const [imageUpload, setImageUpload] = useState(null);
     const [imageURL, setURL] = useState();
     const uploadImage= ()=> {
-      var imageURL=v4();
+      var imageURL=v4().replaceAll('-', '');
       if (imageUpload == null) 
         return;
       else{

@@ -6,13 +6,14 @@ import Link from '@mui/material/Link';
 
 import Box from '@mui/material/Box';
 import EditIcon from '@mui/icons-material/Edit';
-import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import {Container} from '@mui/material';
 import { Button } from '@mui/material';
 import AdminImage from '../image_sources/admin_image.webp'
 import { sendPasswordReset } from '../AdminAuth';
+import Cookies from 'js-cookie';
+
 function AdminProfile() {
-  const adminData=JSON.parse(localStorage.getItem('adminData'));
+  const adminData=JSON.parse(Cookies.get('adminData'));
   const changePasssword=()=>{
       sendPasswordReset(adminData.userEmailID);
   }

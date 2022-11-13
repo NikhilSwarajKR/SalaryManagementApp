@@ -3,8 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import { db ,storage} from "../../firebase";
-
-import {Outlet } from "react-router-dom";
 import BottomNavigation from '@mui/material/BottomNavigation';
 import BottomNavigationAction from '@mui/material/BottomNavigationAction';
 import {Grid} from '@mui/material';
@@ -13,48 +11,77 @@ import NoteAddIcon from '@mui/icons-material/NoteAdd';
 import Breadcrumbs from '@mui/material/Breadcrumbs';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import Link from '@mui/material/Link';
-import AccountantHeader from './AccountantHeader';
 import {ref,getDownloadURL} from "firebase/storage";
 import {doc,getDoc} from 'firebase/firestore';
-
-
-export default function EmployeeDetails() {
+import Cookies from 'js-cookie';
+import EmployeeHeader from './EmployeeHeader'
+import { sendPasswordReset } from '../EmployeeAuth';
+import { Button } from '@mui/material';
+import EditIcon from '@mui/icons-material/Edit';
+function EmployeeProfile() {
   const navigate = useNavigate();
+  const [data,setData]=useState([]);
+  const [imageUpload, setImageUpload] = useState(null);
   const [imageURL, setURL] = useState();
+  const [imgID, setImgID] = useState(null);
   const [EmpEmail, setEmail] = useState("");
   const [loading,setLoading]= useState(false);
-  const data=JSON.parse(localStorage.getItem('RefEmpData'));
-  const fetchImage=()=>{
-    const imageRef = ref(storage, `employee_images/${data.imageID}`)
+
+  const refData=JSON.parse(Cookies.get('employeeData'));
+  const changePasssword=()=>{
+      sendPasswordReset(data.empEmail);
+  }
+  const fetchImage=async(id)=>{
+    const imageRef = ref(storage, `employee_images/${id}`)
     getDownloadURL(imageRef)
     .then((url) => {
       setURL(url)
+      setLoading(true)
     })
     .catch((error) => {
       console.log(error)
     });
   }
   
-
-  const fetchEmail= async()=>{
-    const usersRef = doc(db, "users", data.usersDocID);
-    const docSnap = await getDoc(usersRef);
-    setEmail(docSnap.data().email);
-    setLoading(true);
+  const fetchDetails= async()=>{
+    const empRef = doc(db, "employees", refData.employeeID);
+    const empDocSnap = await getDoc(empRef);
+    const deptRef = doc(db, "departments", empDocSnap.data().department);
+    const deptDocSnap = await getDoc(deptRef);
+    const bpsRef = doc(db, "basicpayscale", empDocSnap.data().paygrade);
+    const bpsDocSnap = await getDoc(bpsRef);
+    const id=empDocSnap.data().img;
+    var temp=[];
+    temp={
+      empID:refData.employeeID,
+      empEmail:refData.userEmailID,
+      firstName: empDocSnap.data().name.first,
+      lastName: empDocSnap.data().name.last,
+      deptID:empDocSnap.data().department,
+      department:deptDocSnap.data().dept_name,
+      pre_yoe: empDocSnap.data().pre_yoe,
+      qualification: empDocSnap.data().qualification,
+      doj: empDocSnap.data().doj,
+      bpsID:empDocSnap.data().paygrade,
+      designation:bpsDocSnap.data().designation,
+      imageID:empDocSnap.data().img,
+      usersDocID:empDocSnap.data().usersDocID
+    };
+   setData(temp);
+   fetchImage(id);
   }
   useEffect(()=>{
-    fetchImage();
-    fetchEmail();
+    fetchDetails();
   },[loading])
+
+
   return (
     <div>
-      <AccountantHeader/>
+      <EmployeeHeader/>
       {loading ?(
       <div className='rendering'>
       <Breadcrumbs separator={<NavigateNextIcon fontSize="small" />}aria-label="breadcrumb">
-          <Link underline="hover" key="1" color="inherit" href="/AccountantProfile" >Home</Link>
-          <Link underline="hover" key="2" color="inherit" >Employees</Link>
-          <Link underline="hover" key="3" color="inherit" href="/EmployeeDetails" >Employee Details</Link>
+          <Link underline="hover" key="1" color="inherit" href="/EmployeeProfile" >Home</Link>
       </Breadcrumbs>
       <div className='rendering'>
           <div className="row">
@@ -76,7 +103,7 @@ export default function EmployeeDetails() {
                     <TextField
                         id="filled-read-only-input"
                         label="Employee ID"
-                        defaultValue={data.empID.toUpperCase()}
+                        defaultValue={data.empID}
                         InputProps={{
                           readOnly: true,
                         }}
@@ -94,7 +121,7 @@ export default function EmployeeDetails() {
                     <TextField
                       id="filled-read-only-input"
                       label="Employee Email ID"
-                      defaultValue={EmpEmail}
+                      defaultValue={data.empEmail}
                       InputProps={{
                         readOnly: true,
                       }}
@@ -121,7 +148,7 @@ export default function EmployeeDetails() {
                     <TextField
                       id="filled-read-only-input"
                       label="Department"
-                      defaultValue={data.deptName}
+                      defaultValue={data.department}
                       InputProps={{
                         readOnly: true,
                       }}
@@ -149,20 +176,22 @@ export default function EmployeeDetails() {
                   </div>
                 </Box>
               </div>
-          </div>     
-          
-        <BottomNavigation showLabels>
-            <BottomNavigationAction label="Generate Salary Slip" onClick={()=> navigate('GenerateSalarySlip')} icon={<NoteAddIcon/>} />
-            <BottomNavigationAction label="Reports"  onClick={()=> navigate('EmployeeReports')} icon={<SummarizeIcon/>} />
-        </BottomNavigation>
-        
-
-        <Outlet/>
+          </div> 
+              
       </div>
+      
+      
+      <Box sx={{ '& .MuiTextField-root': { mt: 30,p:10 }}} >
+            <div>
+              <Button type='submit' variant='contained' className="rounded mx-auto d-block" onClick={changePasssword}>  <EditIcon style={{ color: "white" }}/>&nbsp;&nbsp;&nbsp;&nbsp;Click here to Change Password&nbsp;&nbsp;</Button>         
+            </div>
+        </Box>
     </div>
      ):(
-      <h1>Loading</h1>
+      <div/>
     )}
     </div>
   )
 }
+
+export default EmployeeProfile

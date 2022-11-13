@@ -1,19 +1,7 @@
 import {db,auth} from "../firebase";
-import {
-  GoogleAuthProvider,
-  signInWithPopup,
-  signInWithEmailAndPassword,
-  createUserWithEmailAndPassword,
-  sendPasswordResetEmail,
-  signOut,
-} from "firebase/auth";
-import {
-  query,
-  getDocs,
-  collection,
-  where,
-  addDoc,
-} from "firebase/firestore";
+import {GoogleAuthProvider,signInWithPopup,signInWithEmailAndPassword,createUserWithEmailAndPassword,sendPasswordResetEmail, signOut} from "firebase/auth";
+import {query,getDocs,collection,where,addDoc} from "firebase/firestore";
+import Cookies from 'js-cookie';
 
 const googleProvider = new GoogleAuthProvider();
 const authorizeUser= async(uid)=>{
@@ -25,9 +13,9 @@ const authorizeUser= async(uid)=>{
     const adQ=query(collection(db,'accountant'),where('usersDocID','==',usersDocID))
     const adSnap = await getDocs(adQ);
     const accID=adSnap.docs[0].id;
-    console.log(accID);
-    const accountant={accountantID:accID,usersDocID:usersDocID,userEmailID:usersEmailID}
-    localStorage.setItem('accountantData',JSON.stringify(accountant))
+    const accName=adSnap.docs[0].data().name;
+    const accountant={accountantID:accID,accountantName:accName,usersDocID:usersDocID,userEmailID:usersEmailID}
+    Cookies.set('accountantData',JSON.stringify(accountant))
     window.location='/AccountantProfile'
   }
   catch(error){

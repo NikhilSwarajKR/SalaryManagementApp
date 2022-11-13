@@ -1,20 +1,7 @@
 import {db,auth} from "./../firebase";
-import {
-  GoogleAuthProvider,
-  signInWithPopup,
-  signInWithEmailAndPassword,
-  createUserWithEmailAndPassword,
-  sendPasswordResetEmail,
-  signOut,
-} from "firebase/auth";
-
-import {
-  query,
-  getDocs,
-  collection,
-  where,
-  addDoc,
-} from "firebase/firestore";
+import {GoogleAuthProvider,signInWithPopup,signInWithEmailAndPassword,sendPasswordResetEmail,signOut} from "firebase/auth";
+import {query, getDocs,collection,where,addDoc} from "firebase/firestore";
+import Cookies from 'js-cookie';
 
 const googleProvider = new GoogleAuthProvider();
 
@@ -29,7 +16,7 @@ const authorizeUser= async(uid)=>{
       const adminID=adSnap.docs[0].id;
       const adminName=adSnap.docs[0].data().name;
       const admin={adminID:adminID,adminName:adminName,usersDocID:usersDocID,userEmailID:usersEmailID}
-      localStorage.setItem('adminData',JSON.stringify(admin))
+      Cookies.set('adminData',JSON.stringify(admin))
       window.location='/AdminProfile'
     }
     catch(error){

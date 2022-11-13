@@ -1,5 +1,5 @@
 import React,{useState, useEffect} from 'react';
-import jsPDF from 'jspdf';
+import {jsPDF} from 'jspdf';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import MenuItem from '@mui/material/MenuItem';
@@ -17,19 +17,34 @@ import Paper from '@mui/material/Paper';
 import sjcLOGO from './../image_sources/sjc.png'
 import { Button, Typography } from '@mui/material';
 import numWords from 'num-words';
+import html2canvas from 'html2canvas';
+import {Grid} from '@mui/material';
 function ViewReport() {
   const [loading,setLoading]= useState(false);
   let transData=JSON.parse(localStorage.getItem('refTransData'));
   const month = ["January","February","March","April","May","June","July","August","September","October","November","December"];
   
-  const generatePDF = () => {
-    const pdfElement = document.getElementById('report') // HTML element to be converted to PDF
-    var doc = new jsPDF();
-    doc.html(pdfElement);
-    doc.save("myDocument.pdf");
+  const generatePDF = async()=> {
+    const input = document.getElementById('report')
+    await html2canvas(input).then((canvas) => {
+        const componentWidth = input.offsetWidth
+        const componentHeight =input.offsetHeight
+        const orientation = componentWidth >= componentHeight ? 'l' : 'p'
+        const imgData = canvas.toDataURL('image/jpeg')
+        const pdf = new jsPDF({
+        orientation,
+        unit: 'px'
+      })
+        pdf.internal.pageSize.width = componentWidth
+        pdf.internal.pageSize.height = componentHeight
+        pdf.addImage(imgData, 'JPEG', 0, 0, componentWidth, componentHeight)
+        pdf.save(`${transData.transID}.pdf`)
+      })
+
   }
 return (
-    <div id="report">
+    <div>
+        <div id="report">
         <Box sx={{ m: 8 }}>
         <TableContainer component={Paper}>
         <Table sx={{ minWidth: 700 }} aria-label="spanning table">
@@ -231,7 +246,13 @@ return (
       </Table>
     </TableContainer>
     </Box>
-    <Button onClick={generatePDF}>Download PDF</Button>
+    </div>
+    <div>
+    <Grid container spacing={0} direction="column" alignItems="center" justifyContent="center">
+        <Box > <Button onClick={generatePDF} className="align-items-center">Download</Button></Box>   
+    </Grid> 
+   
+    </div>
     </div>
 )
 }

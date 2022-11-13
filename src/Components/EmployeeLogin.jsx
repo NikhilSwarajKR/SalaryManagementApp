@@ -15,51 +15,48 @@ function EmployeeLogin() {
   const navigate = useNavigate();
   return (
     <div>
-      <NavBar/>
-      <div className="root">
-
-   
+    <NavBar/>
+  <div className="loginpage">
+    
+ 
 <Container maxWidth="x1">
-    <div className="login">
-    < div className="login__container">
-    
-    <h3> Employee login </h3>
-   
-   
-        <input
-          type="text"
-          className="login__textBox"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          placeholder="E-mail Address"
-        />
-        <input
-          type="password"
-          className="login__textBox"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          placeholder="Password"
-        />
-        
-    <Stack spacing={3} direction="column">  
-         <Button variant="contained" size="medium" onClick={() =>logInWithEmailAndPassword(email, password)}
-        > <b>Login </b></Button> 
-         <Button variant="contained" size="medium" onClick={signInWithGoogle}> <b> Login with google </b></Button> 
-         </Stack> 
-        <div>
-          <Link to="/EmployeeReset"> <b>Forgot Password ? </b></Link>
-        </div>
-      
-        
-      
-    
+  <div className="login">
+  < div className="login__container">
+  
+  <h3> EMPLOYEE LOGIN </h3>
+ 
+      <input
+        type="email"
+        className="login__textBox"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        placeholder="E-mail Address"
+        required
+      />
+      <input
+        type="password"
+        className="login__textBox"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+        placeholder="Password"
+        required
+      />
+          
+  <Stack spacing={3} direction="column">  
+       <Button variant="contained"  size="medium" onClick={() =>logInWithEmailAndPassword(email, password)}
+      > <b>Login </b></Button> 
+       <Button variant="contained" size="medium"  onClick={signInWithGoogle}> <b> Login with google </b></Button> 
+       </Stack> 
+      <div>
+        <br />
+        <Link to="/EmployeeReset" className="link"> <b>Forgot Password ? </b></Link>
+      </div>
+</div>
+  </div>
+  </Container>
+  </div>
   
   </div>
-    </div>
-    </Container>
-    </div>
-    </div>
-    
   );
 }
 

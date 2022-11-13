@@ -36,7 +36,7 @@ function ManageEmployee() {
     const [imgID, setImgID] = useState(null);
 
     const uploadImage= ()=> {
-      const imageID=v4();
+      const imageID=v4().replaceAll('-', '');
       if (imageUpload == null) {
         return;
       }

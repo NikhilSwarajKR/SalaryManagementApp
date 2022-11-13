@@ -4,26 +4,22 @@ import DataTable from 'react-data-table-component';
 import Button from '@mui/material/Button'
 import { useNavigate } from 'react-router-dom';
 import {db,storage} from '../../firebase';
-import Breadcrumbs from '@mui/material/Breadcrumbs';
-import NavigateNextIcon from '@mui/icons-material/NavigateNext';
-import Link from '@mui/material/Link';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import Alert from '@mui/material/Alert';
-import AccountantHeader from './AccountantHeader';
-
-
-function AllReports() {
+import EmployeeHeader from './EmployeeHeader'
+import Cookies from 'js-cookie';
+import Breadcrumbs from '@mui/material/Breadcrumbs';
+import NavigateNextIcon from '@mui/icons-material/NavigateNext';
+import Link from '@mui/material/Link';
+function SalarySlips() {
   const [transactionsData, setData] = useState([]);
   const [loading,setLoading]= useState(false);
-  const empData=JSON.parse(localStorage.getItem('RefEmpData'));
-  const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
-  const fetchReports=async()=>{
+  const empData=JSON.parse(Cookies.get('employeeData'));
 
-    const empTransRef =query(collection(db,'transactions'));
+  const fetchReports=async()=>{
+    const empTransRef =query(collection(db,'transactions'),where('empID','==',empData.employeeID));
     const TransSnap = await getDocs(empTransRef);
     let transactionsStore=[];
     
@@ -58,6 +54,11 @@ function AllReports() {
     setLoading(true);
     setData(transactionsStore);
   }
+
+  useEffect(()=>{
+    fetchReports();
+  },[loading]);
+  
   const openViews=(transID)=>{
     let temp=[];
     transactionsData.forEach((trans)=>{
@@ -70,10 +71,6 @@ function AllReports() {
     window.open('/ViewReport');
   }
 
-
-  useEffect(()=>{
-    fetchReports();
-  },[loading]);
   const style = {
     position: 'absolute',
     top: '50%',
@@ -88,21 +85,6 @@ function AllReports() {
     {
       name: 'Transaction ID',
       selector: row => row.transID,
-      sortable: true,
-    },
-    {
-      name: 'Employee ID',
-      selector: row => row.empID.toUpperCase(),
-      sortable: true,
-    },
-    {
-      name: 'Employee Name',
-      selector: row => row.empName,
-      sortable: true,
-    },
-    {
-      name: 'Department',
-      selector: row => row.deptName,
       sortable: true,
     },
     {
@@ -121,57 +103,30 @@ function AllReports() {
       sortable: true,
     },
     {
-      cell: row => <Button variant="outlined" onClick={()=>openViews(row.transID)}>View</Button>,
-      allowOverflow: true,
-      button: true,
-    },
-    {
-      cell: row => <Button variant="outlined" color='error' onClick={()=>handleModal(row.transID)}>Delete</Button>,
+      cell: row => <Button variant="contained" onClick={()=>openViews(row.transID)}>View</Button>,
       allowOverflow: true,
       button: true,
     }];
-    const handleModal=(transID)=>{
-      handleOpen();
-      localStorage.setItem("transID",transID);
-    }
-    const handleDelete=async()=>{
-      let transID=localStorage.getItem('transID');
-      localStorage.removeItem('transID');
-      await deleteDoc(doc(db, "transactions",transID));
-      handleClose();
-      window.location.reload();
-    }
     
     return(
       <div>
-        <AccountantHeader/>
+        <EmployeeHeader/>
         <div className='rendering'>
-        <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <Box sx={style}>
-          <Typography id="modal-modal-description" sx={{ m: 2 }}>
-            <Alert severity="error">Confirming Delete Transaction &nbsp;&nbsp;<Button variant="contained" color="error" onClick={handleDelete}>Delete</Button></Alert>
-          </Typography>
-          
-        </Box>
-      </Modal>
-    <Breadcrumbs separator={<NavigateNextIcon fontSize="small" />}aria-label="breadcrumb">
-        <Link underline="hover" key="1" color="inherit" href="/" >Home</Link>
-        <Link underline="hover" key="3" color="inherit" href="/Reports" >Reports</Link>
-    </Breadcrumbs>
-      <div className='AllReorts rendering'>
+        <Breadcrumbs separator={<NavigateNextIcon fontSize="small" />}aria-label="breadcrumb">
+          <Link underline="hover" key="1" color="inherit" href="/EmployeeProfile" >Home</Link>
+          <Link underline="hover" key="2" color="inherit" href="/Salary Slips" >Salary Slips</Link>
+      </Breadcrumbs>
+          <div className='rendering'>
           {loading ?(
-            <DataTable columns={cols} data={transactionsData} title="Reports" pagination responsive fixedHeader fixedHeaderScrollHeight="400px"/>
+            <DataTable columns={cols} data={transactionsData} title="Salary Slips" pagination responsive fixedHeader/>
           ):(
             <h1>Loading</h1>
           )}
-      </div></div>
       </div>
+      </div>
+      </div>
+      
     );
 }
 
-export default AllReports;
+export default SalarySlips

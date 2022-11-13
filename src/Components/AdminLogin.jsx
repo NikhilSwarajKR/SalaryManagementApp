@@ -19,17 +19,17 @@ function AdminLogin() {
   return (
     <div>
       <NavBar/>
-    <div className="root">
+    <div className="loginpage">
       
    
 <Container maxWidth="x1">
     <div className="login">
     < div className="login__container">
     
-    <h3> Admin login </h3>
+    <h3> ADMIN LOGIN </h3>
    
         <input
-          type="text"
+          type="email"
           className="login__textBox"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
@@ -46,12 +46,13 @@ function AdminLogin() {
         />
             
     <Stack spacing={3} direction="column">  
-         <Button variant="contained" size="medium" onClick={() =>logInWithEmailAndPassword(email, password)}
+         <Button variant="contained"  size="medium" onClick={() =>logInWithEmailAndPassword(email, password)}
         > <b>Login </b></Button> 
-         <Button variant="contained" size="medium" onClick={signInWithGoogle}> <b> Login with google </b></Button> 
+         <Button variant="contained" size="medium"  onClick={signInWithGoogle}> <b> Login with google </b></Button> 
          </Stack> 
         <div>
-          <Link to="/Adminreset"> <b>Forgot Password ? </b></Link>
+          <br />
+          <Link to="/AdminReset" className="link"> <b>Forgot Password ? </b></Link>
         </div>
   </div>
     </div>

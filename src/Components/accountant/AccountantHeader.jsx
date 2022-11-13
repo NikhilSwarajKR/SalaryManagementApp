@@ -22,6 +22,8 @@ import EmployeeReports from './EmployeeReports';
 import AllReports from './AllReports';
 import ViewReport from './ViewReport';
 import {logout} from "./../AccountantAuth";
+import AccountantImage from '../image_sources/accountant_image.png';
+import Cookies from 'js-cookie';
 
 const AccountantHeader = () => {
   const navigate = useNavigate();
@@ -43,12 +45,13 @@ const AccountantHeader = () => {
     setAnchorElUser(null);
   };
   const navigateLogout=()=>{
-    localStorage.clear()
+    localStorage.clear();
+    Cookies.remove('accountantData', { path: '' });
     logout();
     navigate('/');
   }
   const checkUser=()=>{
-    const accountantData=JSON.parse(localStorage.getItem('accountantData'))
+    const accountantData=JSON.parse(Cookies.get('accountantData'))
     if(accountantData){
       return
     }
@@ -69,7 +72,7 @@ const AccountantHeader = () => {
               variant="h6"
               noWrap
               component="a"
-              href="/"
+              href="/AccountantProfile"
               sx={{
                 mr: 2,
                 display: { xs: 'none', md: 'flex' },
@@ -152,7 +155,7 @@ const AccountantHeader = () => {
             <Box sx={{ flexGrow: 0 }}>
               <Tooltip title="Open settings">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                  <Avatar alt="Accountant" src={AccountantImage} />
                 </IconButton>
               </Tooltip>
               <Menu
@@ -172,13 +175,10 @@ const AccountantHeader = () => {
                 onClose={handleCloseUserMenu}
               >
               <MenuItem>
-                <Typography textAlign="center"onClick={() => navigate('/')}>Profile</Typography>
+                <Typography textAlign="center"onClick={() => navigate('/AccountantProfile')}>&nbsp;&nbsp;Profile&nbsp;&nbsp;</Typography>
               </MenuItem>
               <MenuItem>
-                <Typography textAlign="center"onClick={() => navigate('/')}>Change Password</Typography>
-              </MenuItem>
-              <MenuItem>
-                <Typography textAlign="center"onClick={() => navigate('/')}>Logout</Typography>
+                <Typography textAlign="center"onClick={navigateLogout} >&nbsp;&nbsp;Logout&nbsp;&nbsp;</Typography>
               </MenuItem>
               </Menu>
             </Box>

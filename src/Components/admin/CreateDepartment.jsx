@@ -71,7 +71,7 @@ function CreateDepartment() {
 
           <div className="input-group mb-3">
             <span className="input-group-text" >Department Name</span>
-            <input type="text" className="form-control" required id="dept_name" label="Department Name"/>
+            <input type="text" className="form-control" pattern="^[a-zA-Z_ ]*$" required id="dept_name" label="Department Name"/>
           </div>
 
           <div className="input-group mb-3">

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import DataTable from 'react-data-table-component';
-import { db,storage } from "../../firebase";
+import { db,storage,auth } from "../../firebase";
 import {collection,doc,setDoc,query,Timestamp,getDocs} from "firebase/firestore";
 import {ref,uploadBytes} from "firebase/storage";
 import Button from '@mui/material/Button';
@@ -11,8 +11,8 @@ import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import Link from '@mui/material/Link';
 import { v4 } from "uuid";
 import AdminHeader from "./AdminHeader";
-
-
+import { registerWithEmailAndPassword } from "../AdminAuth";
+import { sendPasswordResetEmail } from "firebase/auth";
 function CreateEmployee() {
     const navigate = useNavigate();
     
@@ -33,6 +33,7 @@ function CreateEmployee() {
       var emp_id = document.getElementById("emp_id").value;
       const first = document.getElementById("first").value;
       const last = document.getElementById("last").value;
+      const email = document.getElementById("email").value;
       const qual = document.getElementById("qual").value;
       const dept = document.getElementById("dept").value;
       const months = document.getElementById("months").value;
@@ -41,19 +42,31 @@ function CreateEmployee() {
       const paygrade = document.getElementById("paygrade").value;
       var imgID=uploadImage();
       emp_id='sjce'+emp_id
-      try {
-        await setDoc(doc(db, "employees", emp_id), {
-          name: {first:first,last:last},
-          img:imgID,
-          qualification: qual,
-          department: dept,
-          pre_yoe: {months:months,years:years},
-          paygrade: paygrade,
-          doj: Timestamp.fromDate(DOJ),
-        });
-      } catch (err) {
-        alert(err);
+      var uid;
+      try{
+        uid= await registerWithEmailAndPassword(email,v4().replaceAll('-', '').substring(0,8));
+        await sendPasswordResetEmail(auth, email);
+        console.log(uid)
+        try {
+          await setDoc(doc(db, "employees", emp_id), {
+            name: {first:first,last:last},
+            img:imgID,
+            qualification: qual,
+            department: dept,
+            pre_yoe: {months:months,years:years},
+            paygrade: paygrade,
+            doj: Timestamp.fromDate(DOJ),
+            usersDocID:uid
+          });
+        } catch (error) {
+          console.log(error);
+        }
       }
+      catch(error){
+        console.log(error)
+        return
+      }
+      
       navigate('/Employees');
     };
 
@@ -118,13 +131,17 @@ function CreateEmployee() {
           <div className="input-group mb-3">
             <span className="input-group-text" >Employee Name</span>
             <span className="input-group-text" >First Name</span>
-            <input type="text" className="form-control" required id="first"  />
+            <input type="text" className="form-control" pattern="^[a-zA-Z_ ]*$"required id="first"  />
             <span className="input-group-text" >Last Name</span>
-            <input type="text" className="form-control" required id="last"  />
+            <input type="text" className="form-control" pattern="^[a-zA-Z_ ]*$" required id="last"  />
+          </div>
+          <div className="input-group mb-3">
+            <span className="input-group-text" >Email ID&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            <input type="email" className="form-control" required id="email"  />
           </div>
           <div className="input-group mb-3">
             <span className="input-group-text" >Qualification &nbsp;&nbsp;&nbsp;&nbsp;</span>
-            <input type="text" className="form-control" required id="qual"  />
+            <input type="text" className="form-control" pattern="^[a-zA-Z_ ]*$" required id="qual"  />
           </div>
           <div className="input-group mb-3">
             <span className="input-group-text" >Previous Period Of Experince &nbsp;&nbsp;&nbsp;&nbsp;</span>

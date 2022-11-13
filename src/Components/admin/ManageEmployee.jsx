@@ -181,13 +181,13 @@ function ManageEmployee() {
           <div className="input-group mb-3">
             <span className="input-group-text" >Employee Name</span>
             <span className="input-group-text" >First Name</span>
-            <input type="text" className="form-control" required id="first" defaultValue={RefEmpData.firstName} />
+            <input type="text" className="form-control"pattern="^[a-zA-Z_ ]*$" required id="first" defaultValue={RefEmpData.firstName} />
             <span className="input-group-text" >Last Name</span>
-            <input type="text" className="form-control" required id="last" defaultValue={RefEmpData.lastName} />
+            <input type="text" className="form-control"pattern="^[a-zA-Z_ ]*$" required id="last" defaultValue={RefEmpData.lastName} />
           </div>
           <div className="input-group mb-3">
             <span className="input-group-text" >Qualification &nbsp;&nbsp;&nbsp;&nbsp;</span>
-            <input type="text" className="form-control" required id="qual" defaultValue={RefEmpData.qualification}/>
+            <input type="text" className="form-control"pattern="^[a-zA-Z_ ]*$" required id="qual" defaultValue={RefEmpData.qualification}/>
           </div>
           <div className="input-group mb-3">
             <span className="input-group-text" >Previous Period Of Experince &nbsp;&nbsp;&nbsp;&nbsp;</span>

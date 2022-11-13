@@ -64,7 +64,7 @@ function CreatePayScale() {
             </div>
             <div className="input-group mb-3">
                 <span className="input-group-text" >Designation &nbsp;&nbsp;&nbsp;&nbsp;</span>
-                <input type="text" className="form-control" required id="designation"   />
+                <input type="text" className="form-control" pattern="^[a-zA-Z_ ]*$" required id="designation"   />
             </div>
             <div className="input-group mb-3">
                 <span className="input-group-text" >Basic Pay &nbsp;&nbsp;&nbsp;&nbsp;</span>

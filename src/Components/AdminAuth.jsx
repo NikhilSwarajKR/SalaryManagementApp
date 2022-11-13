@@ -1,5 +1,5 @@
 import {db,auth} from "./../firebase";
-import {GoogleAuthProvider,signInWithPopup,signInWithEmailAndPassword,sendPasswordResetEmail,signOut} from "firebase/auth";
+import {GoogleAuthProvider,signInWithPopup,signInWithEmailAndPassword,createUserWithEmailAndPassword,sendPasswordResetEmail,signOut} from "firebase/auth";
 import {query, getDocs,collection,where,addDoc} from "firebase/firestore";
 import Cookies from 'js-cookie';
 
@@ -65,6 +65,21 @@ const logInWithEmailAndPassword = async (email, password) => {
   }
   
 };
+const registerWithEmailAndPassword = async (email, password) => {
+  try {
+    const res = await createUserWithEmailAndPassword(auth, email, password);
+    const user = res.user;
+    await addDoc(collection(db, "users"), {
+      uid: user.uid,
+      authProvider: "local",
+      email,
+    });
+    return user.uid
+  } catch (err) {
+    console.error(err);
+    alert(err.message);
+  }
+};
 
 const sendPasswordReset = async (email) => {
   try {
@@ -83,6 +98,7 @@ export {
   signInWithGoogle,
   logInWithEmailAndPassword,
   sendPasswordReset,
+  registerWithEmailAndPassword,
   logout,
   authorizeUser
 };

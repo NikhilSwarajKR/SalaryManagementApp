@@ -56,7 +56,7 @@ function EditDepartment() {
           </div>
           <div className="input-group mb-3">
             <span className="input-group-text" >Department Name</span>
-            <input type="text" className="form-control" required id="deptName" label="Department Name" defaultValue={refDeptData.deptName} />
+            <input type="text" className="form-control" pattern="^[a-zA-Z_ ]*$"required id="deptName" label="Department Name" defaultValue={refDeptData.deptName} />
           </div>
           <div className="input-group mb-3">
             <span className="input-group-text">Department Category </span>
